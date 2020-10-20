@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebStore.Models;
 using WebStore.Models.DbModel;
 using WebStore.Models.ViewModel;
 
@@ -13,16 +14,20 @@ namespace WebStore.Controllers
     {
         private readonly UserManager<AccountUser> userManager;
         private readonly SignInManager<AccountUser> signInManager;
+        private readonly ApplicationContext dbContext;
+
         public AccountController(UserManager<AccountUser> userManager,
-                                 SignInManager<AccountUser> signInManager)
+                                 SignInManager<AccountUser> signInManager,
+                                 ApplicationContext dbContext)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.dbContext = dbContext;
         }
         [HttpGet]
         public IActionResult Register()
         {
-            return View("Views/Account/Register.chtml");
+            return View();
         }
         [HttpPost]
         public async Task<IActionResult> RegisterAsync(RegisterViewModel model)
@@ -45,6 +50,8 @@ namespace WebStore.Controllers
                         DateRegister = DateTime.Now
                         
                     };
+                    dbContext.Userss.Add(newUser);
+                    await dbContext.SaveChangesAsync();
 
                     return RedirectToAction("Index", "Home");
                 }

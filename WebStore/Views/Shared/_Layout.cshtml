@@ -1,9 +1,14 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity;
+
+@inject SignInManager<WebStore.Models.DbModel.AccountUser> SignInManager
+@inject UserManager<WebStore.Models.DbModel.AccountUser> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WebStore</title>
+    <title>@ViewData["Title"] - </title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -11,19 +16,59 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">WebStore</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Інтернет магазин</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        @{
+                            var user = UserManager.GetUserName(User);
+
+                            string userRoles = "";
+                            if (User.Identity.IsAuthenticated)
+                            {
+
+                                if (User.IsInRole("Admin"))
+                                {
+                                    userRoles = "Admin";
+                                }
+                                else if (User.IsInRole("User"))
+                                {
+                                    userRoles = "User";
+                                }
+                            }
+                            if (userRoles != "" || user != null)
+                            {
+                                var i = ViewBag.User;
+                                var r = User.Identity.Name;
+
+
+                            }
+                            if (userRoles == "Admin")
+                            {
+                                @*<li><a asp-action="UserList" asp-controller="Roles">USER </a></li>*@
+                                <li><a asp-action="" asp-controller="">Товари </a></li>
+                            }
+                        }
+
+
+                        <li>@Html.ActionLink("Контакти", "Contact", "Home")</li>
+                        @*<li><a asp-action="" asp-controller="">Товари </a></li>*@
+
+
+                    </ul>
+                    @await Html.PartialAsync("_LoginPartial")
+                </div>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
+                        @*<li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        </li>*@
                     </ul>
                 </div>
             </div>
