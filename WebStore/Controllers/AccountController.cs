@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WebStore.Models;
 using WebStore.Models.DbModel;
 using WebStore.Models.ViewModel;
+using WebStore.Models.ViewModel.Accounts;
 
 namespace WebStore.Controllers
 {
@@ -64,6 +65,12 @@ namespace WebStore.Controllers
                 }
             }
             return View("Views/Account/Register.chtml", model);
+        }
+
+        [HttpGet]
+        public IActionResult Login(string returnUrl = null)
+        {
+            return View(new LoginViewModel { ReturnUrl = returnUrl });
         }
     }
 }

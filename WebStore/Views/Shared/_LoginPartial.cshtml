@@ -20,25 +20,29 @@
         }
     }
     <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hello @UserManager.GetUserName(User)! - @userRoles</a>
-            </li>
-            <li>
-                <button type="submit" class="btn btn-link navbar-btn navbar-link">Log out</button>
-            </li>
-        </ul>
+        <div id="nav_right">
+            <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hello @UserManager.GetUserName(User)! - @userRoles</a>
+            <button type="submit">Log out</button>
+        </div>
+       
     </form>
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            <a href="" style="margin-right: 50px">
+    <div  id="nav_right">     
+            <span href="">
                 Hello, Guest!
-            </a>
-        </li>
-        <li><a asp-area="" asp-controller="Account" asp-action="Register">Register</a></li>
-        <li><a asp-area="" asp-controller="Account" asp-action="Login">Log in</a></li>
-    </ul>
+            </span>
+    
+        <a asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+        <a asp-area="" asp-controller="Account" asp-action="Login">Log in</a>
+    </div>
 }
+
+<style>
+    #nav_right
+    {
+        margin-right: 40px;
+        margin-left: 350px;
+    }
+</style>
