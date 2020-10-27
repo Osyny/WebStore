@@ -1,5 +1,5 @@
 ﻿@model WebStore.Models.ViewModel.RegisterViewModel;
-<h2>Реєстрація нового пользователя</h2>
+<h2>Реєстрація нового користувача</h2>
 
 <form method="post" asp-controller="Account" asp-action="Register">
     <div>
@@ -16,8 +16,9 @@
         <input asp-for="PasswordConfirm" />
         <span asp-validation-for="PasswordConfirm"></span>
     </div>
+    <br/>
     <div>
-        <button type="submit" value="Зареєструватись"></button>
+        <button type="submit" value="Зареєструватись">Зареєструватись</button>
     </div>
 
 </form>
