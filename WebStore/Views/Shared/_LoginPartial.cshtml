@@ -21,8 +21,8 @@
     }
     <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
         <div id="nav_right">
-            <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hello @UserManager.GetUserName(User)! - @userRoles</a>
-            <button type="submit">Log out</button>
+            <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hello @UserManager.GetUserName(User)! </a>
+            <button type="submit" style=" margin-left: 40px;" >Log out</button>
         </div>
        
     </form>
@@ -35,7 +35,7 @@ else
             </span>
     
         <a style=" margin-right: 30px;" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
-        <a asp-area="" asp-controller="Account" asp-action="Login">Log in</a>
+        <a asp-area="" asp-controller="Account" asp-action="Login" &copy;>Log in</a>
     </div>
 }
 
