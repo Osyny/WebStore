@@ -1,8 +1,84 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model WebStore.Models.ViewModel.Home.UserViewModel
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+@if (Model != null && Model.RoleName == "Admin")
+{
+    <div class="topMenu">
+        <div id="contMenu">
+
+            <a asp-action="" asp-controller="">Товари </a>
+        </div>
+        <div id="contMenu">
+            <a asp-action="UserList" asp-controller="Roles">Користувачі </a>
+        </div>
+
+
+    </div>
+
+}
+<br />
+<br />
+<hr />
+
+
+<div id="container">
+    <img src="~/images/logo.png" />
+    <span id="text_logo" ><b>HandMade_shop</b> - товари ручної роботи</span>
 </div>
+
+  
+
+
+
+<hr />
+
+<h5 id="container"><b>Групи роварів і послуг</b></h5>
+<hr />
+
+
+
+<div class="back" style="display: inline;">
+    <a class="first" href="" > <img src="~/images/sumka/sumka2.jpg" style="width: 100%;"><h4>Сумки</h4></a>
+    <a class="second" href="" ><img src="~/images/Skatertyna/skatertuna.jpg"  style="width: 100%;"><h4>Скатертини, коврики</h4></a>
+    @*<a class="second" href=""><img src="~/images/sumka2.jpg"  style="width: 100%;"> <h4>Шампуневе мило</h4></a>*@
+    <a class="second" href=""><img src="~/images/Shampun/shampoo_2.jpg"  style="width: 100%;"> <h4>Тверді шампун</h4></a>
+    </div>
+
+  
+<style>
+
+    .back a {
+        width: 30%;
+       
+        margin-left: 10px;
+        margin-right: 10px;
+        float: left;
+        display: block;
+    }
+
+    #text_logo {
+        color: saddlebrown;       
+        font-size: 25pt;
+    }
+    #logo {
+        padding: 5px;
+    }
+
+    #contMenu {
+        background: #f1f1f1;
+        font-weight: bold;
+        float: left;
+        margin-left: 15px;
+        margin-right: 15px;
+        margin-bottom: 50px;
+        text-align: center;
+        padding: 10px;
+    }
+
+    #container {
+        background-color: aliceblue;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 25px;
+    }
+</style>

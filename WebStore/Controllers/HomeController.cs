@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WebStore.Models;
 using WebStore.Models.DbModel;
+using WebStore.Models.ViewModel.Home;
 
 namespace WebStore.Controllers
 {
@@ -18,8 +19,9 @@ namespace WebStore.Controllers
         private readonly ApplicationContext dbContext;
 
         private readonly UserManager<AccountUser> userManager;
+        private readonly SignInManager<AccountUser> signInManager;
 
-        public HomeController(
+        public HomeController(SignInManager<AccountUser> signInManager,
             ILogger<HomeController> logger, 
             RoleManager<IdentityRole> roleManager,
             UserManager<AccountUser> userManager,
@@ -27,25 +29,46 @@ namespace WebStore.Controllers
         {
             _logger = logger;
             this.roleManager = roleManager;
+            this.signInManager = signInManager;
+
             this.dbContext = dbContext;
             this.userManager = userManager;
         }
-        public class UserViewModel
-        {
-            public string RoleName { get; set; }
-            public AccountUser AccountUser { get; set; }
-        }
+       
         public async Task<IActionResult> IndexAsync()
         {
             var roles = this.roleManager.Roles.ToList();
 
             var userName = HttpContext.User.Identity.Name;
-            AccountUser accountUser = await userManager.FindByNameAsync(userName);
-            var model = new UserViewModel()
+          
+            UserViewModel model = null;
+            if (userName != null)
             {
-                // RoleName = roles,
 
-            };
+                AccountUser accountUser = await userManager.FindByNameAsync(userName);
+                string userRoles = "";
+                if (this.signInManager.IsSignedIn(User))
+                {
+                    if (User.Identity.IsAuthenticated)
+                    {
+
+                        if (User.IsInRole("Admin"))
+                        {
+                            userRoles = "Admin";
+                        }
+                        else if (User.IsInRole("User"))
+                        {
+                            userRoles = "User";
+                        }
+                    }
+                }
+                model = new UserViewModel()
+                {
+                    RoleName = userRoles,
+                    AccountUser = accountUser
+                };
+            }
+           
 
             return View(model);
         }

@@ -8,6 +8,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
     <title>HandMade_shop </title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
@@ -16,7 +17,8 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Домашня сторінка</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" title="HandMade_shop">
+                        <img src="~/images/homeLogo.jpg" /></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -48,21 +50,20 @@
                             }
                             if (userRoles == "Admin")
                             {
-                                @*<li><a asp-action="UserList" asp-controller="Roles">USER </a></li>
-                                <li><a asp-action="" asp-controller="">Товари </a></li>*@
-                        <li><a style=" margin-right: 20px;" asp-action="" asp-controller="">Кабінет </a> </li>
+
+                                <li><a style=" margin-right: 20px;" asp-action="" asp-controller="">Кабінет </a> </li>
                             }
                         }
 
 
-                        <li >@Html.ActionLink("Контакти", "Contact", "Home")</li>
-                      
+                        <li>@Html.ActionLink("Контакти", "Contact", "Home")</li>
+
 
 
                     </ul>
                     @await Html.PartialAsync("_LoginPartial")
                 </div>
-              
+
             </div>
         </nav>
     </header>
@@ -86,11 +87,14 @@
 
 </html>
 <style>
-    #container {
+    img {
+        width: 20%;
+    }
+    /*#container {
         background-color: aliceblue;
         border: 1px solid #ddd;
         border-radius: 4px;
         padding: 25px;
-    }
+    }*/
 </style>
 
