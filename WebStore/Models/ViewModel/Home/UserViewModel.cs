@@ -10,5 +10,12 @@ namespace WebStore.Models.ViewModel.Home
     {
         public string RoleName { get; set; }
         public AccountUser AccountUser { get; set; }
+        public List<CategoryVm> CategoryVm { get; set; }
     }
-}
+    public class CategoryVm
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Img { get; set; }
+    }
+    }

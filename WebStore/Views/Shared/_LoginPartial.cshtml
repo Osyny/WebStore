@@ -5,20 +5,7 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    //string userRoles = "";
-
-    //if (User.Identity.IsAuthenticated)
-    //{
-
-    //    if (User.IsInRole("Admin"))
-    //    {
-    //        userRoles = "Admin";
-    //    }
-    //    else if (User.IsInRole("User"))
-    //    {
-    //        userRoles = "User";
-    //    }
-    //}
+  
     <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
         <div id="nav_right">
             <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hello @UserManager.GetUserName(User)! </a>

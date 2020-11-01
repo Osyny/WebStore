@@ -8,11 +8,11 @@
 <div class="cont" id="container">
     @*<a asp-action="Create" asp-controller="Roles">Добавити роль</a>*@
     &nbsp;&nbsp;&nbsp;
-    <a class="btn btn-sm btn-primary" asp-action="Index" asp-controller="Roles" asp-route-userid=""><h4><b>Ролі</b></h4></a>
+    <a style=" background-color: #f1f1f1;" asp-action="Index" asp-controller="Roles" asp-route-userid=""><h4><b>Ролі</b></h4></a>
     &nbsp;&nbsp;&nbsp;
-    <a class="btn btn-sm btn-primary" asp-action="UserList" asp-controller="Roles"><h4><b>Користувачі</b></h4></a>
+    <a style=" background-color: #f1f1f1;" asp-action="UserList" asp-controller="Roles"><h4><b>Користувачі</b></h4></a>
     &nbsp;&nbsp;&nbsp;
-    <a class="btn btn-sm btn-primary" asp-action="Index" asp-controller="Category"><h4><b>Категорії товарів</b></h4></a>
+    <a style="background-color: #f1f1f1;" asp-action="Index" asp-controller="Category"><h4><b>Категорії товарів</b></h4></a>
 
 </div>
 <hr />
@@ -35,7 +35,7 @@
                     </form>
                 </td>
                 <td>
-                    <a class="btn btn-sm btn-primary" asp-action="Edit" asp-controller="Roles" asp-route-userid="@user.Id">Edit User</a>
+                    <a style=" background-color: #f1f1f1;" asp-action="Edit" asp-controller="Roles" asp-route-userid="@user.Id">Edit User</a>
                 </td>
             </tr>
         }

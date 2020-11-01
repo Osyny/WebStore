@@ -1,0 +1,28 @@
+﻿@model List<WebStore.Models.ViewModel.Products.ProductVm>
+
+<div id="conteiner">
+    <h4> <b> Сумки ручної роботи </b></h4>
+</div>
+<hr />
+
+<div  id="container">
+
+
+        @foreach (var product in Model)
+        {
+
+            <div id="container">
+                <p>@product.Number</p>
+               <ul>
+                   <li> <a href="@Url.Action("Abouty", "Product", new { Id = product.Id })"><img />@product.Name</a></li>
+                   <li> - @product.PriceGoods &nbsp;грн</li>
+                   <li></li>
+                </ul>
+            </div>
+
+        }
+
+
+</div>
+
+

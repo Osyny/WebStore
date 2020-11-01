@@ -41,7 +41,7 @@ namespace WebStore.Controllers
 
             var userName = HttpContext.User.Identity.Name;
           
-            UserViewModel model = null;
+            UserViewModel model = new UserViewModel();
             if (userName != null)
             {
 
@@ -62,13 +62,18 @@ namespace WebStore.Controllers
                         }
                     }
                 }
-                model = new UserViewModel()
-                {
-                    RoleName = userRoles,
-                    AccountUser = accountUser
-                };
+                model.RoleName = userRoles;
+                model.AccountUser = accountUser;
+                
             }
-           
+            var categorys = this.dbContext.Categories.ToList();
+            model.CategoryVm = categorys.Any() ? categorys.Select(cat => new CategoryVm()
+            {
+                Id = cat.Id,
+                Name = cat.Name,
+               // Img = 
+
+            }).ToList() : new List<CategoryVm>();
 
             return View(model);
         }

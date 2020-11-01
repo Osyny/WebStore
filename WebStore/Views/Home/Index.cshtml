@@ -3,17 +3,19 @@
 
 @if (Model != null && Model.RoleName == "Admin")
 {
-    <div class="topMenu">
-        <div id="contMenu">
-
-            <a asp-action="" asp-controller="">Товари </a>
-        </div>
-        <div id="contMenu">
-            <a asp-action="UserList" asp-controller="Roles">Користувачі </a>
-        </div>
-
-
+<div class="topMenu">
+    <div id="contMenu">
+        <a asp-action="" asp-controller="">Товари </a>
     </div>
+    <div id="contMenu">
+        <a asp-action="Index" asp-controller="Category">Категорії </a>
+    </div>
+    <div id="contMenu">
+        <a asp-action="UserList" asp-controller="Roles">Користувачі </a>
+    </div>
+
+
+</div>
 
 }
 <br />
@@ -22,7 +24,7 @@
 
 
 <div id="container">
-    <img src="~/images/logo.png" />
+    <img style=" width: 10%;" src="~/images/logo.png" />
     <span id="text_logo" ><b>HandMade_shop</b> - товари ручної роботи</span>
 </div>
 
@@ -38,31 +40,45 @@
 
 
 <div class="back" style="display: inline;">
-    <a class="first" href="" > <img src="~/images/sumka/sumka2.jpg" style="width: 100%;"><h4>Сумки</h4></a>
-    <a class="second" href="" ><img src="~/images/Skatertyna/skatertuna.jpg"  style="width: 100%;"><h4>Скатертини, коврики</h4></a>
-    @*<a class="second" href=""><img src="~/images/sumka2.jpg"  style="width: 100%;"> <h4>Шампуневе мило</h4></a>*@
-    <a class="second" href=""><img src="~/images/Shampun/shampoo_2.jpg"  style="width: 100%;"> <h4>Тверді шампун</h4></a>
-    </div>
+    @foreach (var cat in Model.CategoryVm)
+    {
+        <a class="first" href="@Url.ActionLink("Index", "Product", new
+                      {
+                          categoryId = cat.Id
+                      })"> <img src="~/images/sumka/sumka2.jpg" style="width: 100%;"><h4>@cat.Name</h4></a>
+    }
+
+    @*<a class="second" href="@Url.ActionLink("Index", "Product", new
+                      {
+                          //categoryId =
+                      })"><img src="~/images/Skatertyna/skatertuna.jpg" style="width: 100%;"><h4>Скатертини, коврики</h4></a>
+
+    <a class="second" href="@Url.ActionLink("Index", "Product", new
+                      {
+                          //categoryId =
+                      })"><img src="~/images/Shampun/shampoo_2.jpg" style="width: 100%;"> <h4>Тверді шампун</h4></a>*@
+</div>
 
   
 <style>
 
     .back a {
         width: 30%;
-       
         margin-left: 10px;
         margin-right: 10px;
         float: left;
         display: block;
+
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 5px;
     }
 
     #text_logo {
         color: saddlebrown;       
         font-size: 25pt;
     }
-    #logo {
-        padding: 5px;
-    }
+   
 
     #contMenu {
         background: #f1f1f1;

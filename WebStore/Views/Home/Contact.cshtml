@@ -7,14 +7,12 @@
 <hr />
 <div id="bacground">
     <p>
-        <img src="~/images/Tel.jpg" />
+        <img id="img" src="~/images/Tel.jpg" />
         &nbsp; Tel : +3809876542
     </p>
 
-
     <p>
-        <img src="~/images/email.jpg" />
-
+        <img id="img" src="~/images/email.jpg" />
         &nbsp; Email : "admin@23gmai.ua"
     </p>
 </div>
@@ -31,12 +29,12 @@
         background-color: aliceblue;
     }
 
-    img {
+    #img {
         border: 1px solid #ddd;
         border-radius: 4px;
         padding: 5px;
-        width: 80px;
-        height: 80px;
+       width: 10%;
+       /* height: 80px;*/
     }
 
     p {
@@ -46,7 +44,10 @@
     }
 
     #imgAddress {
-        width: 180px;
-        height: 130px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 5px;
+        width: 150px;
+        height: 120px;
     }
 </style>
