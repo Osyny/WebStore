@@ -1,0 +1,34 @@
+﻿@model WebStore.Models.ViewModel.Category.CategoryEditVm  //*WebStore.Models.DbModel.Category*@
+
+<form asp-action="EditSubmit" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+   <hr/>
+   <div id="container">
+       <input type="hidden" name="Id" value="@Model.Id" />
+       <div>
+           <label for="Name">&nbsp; &nbsp;Kатегорія</label>
+           <input name="Name" class="form-control" value="@Model.Name" />
+       </div>
+       <hr />
+       <!-- Image -->
+       <div>
+           <h5>&nbsp; &nbsp;Зображення</h5>
+           <div class="col-md-10">
+               <input type="file" name="Image" class="form-control" value="@Model.Image" />
+           </div>
+       </div>
+       <hr />
+       <button type="submit" class="btn btn-primary">Редагувати</button>
+   </div>
+</form>
+
+<style>
+   
+    #container
+    {
+        background-color: aliceblue;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 25px;
+    }
+</style>

@@ -18,19 +18,28 @@
                     <th>Назва</th>
                 </tr>
                 <tr> </tr>
+                <tr> </tr>
             </thead>
             @foreach (var cat in Model)
             {
                 <tbody>
                     <tr>
-                        <td>@cat.Name</td>
+                        <td>@cat.Name &nbsp; <span><img  src="@cat.Image" style="width: 10%;"></span></td>
+                        <td>
+                            <form asp-action="Edit" asp-route-id="@cat.Id" method="post">
+                                <button type="submit" >
+                                    Редагувати
+                                </button>
+                            </form>
+                        </td>
                         <td>
                             <form asp-action="Delete" asp-route-id="@cat.Id" method="post">
-                                <button type="submit" @*class="btn btn-sm btn-danger"*@>
+                                <button type="submit" class="btn btn-sm btn-danger">
                                     Видалити
                                 </button>
                             </form>
                         </td>
+
                     </tr>
                 </tbody>
             }

@@ -45,7 +45,7 @@
         <a class="first" href="@Url.ActionLink("Index", "Product", new
                       {
                           categoryId = cat.Id
-                      })"> <img src="~/images/sumka/sumka2.jpg" style="width: 100%;"><h4>@cat.Name</h4></a>
+                      })"> <img src="@cat.Img" style="width: 100%;"><h4>@cat.Name</h4></a>
     }
 
     @*<a class="second" href="@Url.ActionLink("Index", "Product", new

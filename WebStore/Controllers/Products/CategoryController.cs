@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebStore.Models;
 using WebStore.Models.DbModel;
+using WebStore.Models.ViewModel.Category;
 
 namespace WebStore.Controllers.Products
 {
@@ -49,6 +50,7 @@ namespace WebStore.Controllers.Products
                     FileAccess.Write);
                 await Image.CopyToAsync(fs);
                 fs.Close();
+
                 newCategory.Image = path;
             }
 
@@ -70,21 +72,24 @@ namespace WebStore.Controllers.Products
             {
                 return NotFound();
             }
+            var model = new CategoryEditVm()
+            {
+                Id = category.Id,
+                Name = category.Name,
+                Image = category.Image
+            };
 
-            return View(category);
+            return View(model);
         }
 
-        // POST: Candidates/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, /*[Bind("Id,Avatar,LastName,Name,Surname,Sex,Birthday,CityId,Country,Region,Street,ApartmentNumber,PhoneNumber,Email,Skype,Facebook")] Search_Work.Models.ArreaDatabase.Candidate candModel,*/*/ IFormFile Image)
+        public async Task<IActionResult> EditSubmit(CategoryEditVm model , IFormFile Image)
         {
             var upCat = this.dbContext.Categories
-                .FirstOrDefault(c => c.Id == id);
+                .FirstOrDefault(c => c.Id == model.Id);
 
-            if (id != upCat.Id || upCat == null)
+            if ( upCat == null)
             {
                 return NotFound();
             }
@@ -92,7 +97,7 @@ namespace WebStore.Controllers.Products
             if (ModelState.IsValid)
             {
 
-                if (Image != null)
+                if (Image != null )
                 {
                     string name = Image.FileName;
                     string path = $"/files/{name}";
@@ -104,7 +109,11 @@ namespace WebStore.Controllers.Products
                     upCat.Image = path;
                 }
             }
-            upCat.Name = 
+            upCat.Name = model.Name;
+
+            this.dbContext.Categories.Update(upCat);
+            this.dbContext.SaveChanges();
+
 
             return RedirectToAction("Index");
         }

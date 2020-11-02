@@ -71,7 +71,7 @@ namespace WebStore.Controllers
             {
                 Id = cat.Id,
                 Name = cat.Name,
-               // Img = 
+                Img = cat.Image
 
             }).ToList() : new List<CategoryVm>();
 
