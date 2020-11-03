@@ -1,0 +1,65 @@
+﻿@model WebStore.Models.ViewModel.Products.ProductEditVm
+
+<div id="conteiner">
+    <h4> <b> Редагування </b></h4>
+</div>
+<hr />
+
+
+<form asp-action="CreateSubmit" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div id="conteiner">
+
+        <div class="form-group">
+            <label for="Name">Назва</label>
+            <input name="Name" class="form-control" value="@Model.Name" />
+        </div>
+        <!-- Image -->
+        <div class="form-group">
+
+            <div class="col-md-10">
+                <img id="Img_lpgo" src="@Model.Image">
+                <input type="file" name="Image" class="form-control" value="@Model.Image" />
+            </div>
+        </div>
+
+        @*<select for="CategoryId" asp-items="@Model.Categories">
+                <option>Виберіть</option>
+            </select>*@
+
+        <h5>Категорія - <b style="color:brown;">@Model.CategoryName</b></h5>
+        @Html.DropDownList("FamilyStatusId", Model.Categories);
+        <hr />
+        <div class="form-group">
+            <label for="PriceGoods"><b>Ціна</b></label>
+            <input type="number" step="0.01" name="PriceGoods" class="form-control" value="@Model.PriceGoods" />
+        </div>
+        <hr />
+        <div class="form-group">
+            <label for="Discription"><b>Опис</b></label>
+            <input name="Discription" class="form-control" value="@Model.Discription" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Добавити</button>
+
+    </div>
+</form>
+
+<style>
+    #Img_lpgo {
+        width: 20%;
+        
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 10px;
+    }
+
+    #container {
+        background-color: aliceblue;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 25px;
+    }
+</style>
+

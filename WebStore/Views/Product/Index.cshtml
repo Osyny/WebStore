@@ -14,8 +14,9 @@
             <div id="container">
                 <p>@product.Number</p>
                <ul>
-                   <li> <a href="@Url.Action("Abouty", "Product", new { Id = product.Id })"><img />@product.Name</a></li>
-                   <li> - @product.PriceGoods &nbsp;грн</li>
+                   <li> <a href="@Url.Action("About", "Product", new { Id = product.Id })"><img src="@product.Image" /><h4><b>@product.Name</b></h4></a></li>
+                   <li><hr /></li>
+                   <li style="color:brown"><b> @product.PriceGoods &nbsp;грн</b></li>
                    <li></li>
                 </ul>
             </div>

@@ -1,11 +1,11 @@
-﻿@model List<WebStore.Models.DbModel.Category>
+﻿@model WebStore.Models.ViewModel.Products.ProductsViewModel
 
 <div id="conteiner">
-    <h4 style="color:brown; margin-left: 100px;"> <b> Категорії </b></h4>
+    <h4 style="color:brown; margin-left: 100px;"> <b> Сумки ручної роботи </b></h4>
 </div>
 
 <div id="container">
-   <span id="cat"> <a asp-action="Create">Добавити категорію</a></span> 
+    <span id="cat"> <a asp-action="Create">Добавити нову</a></span>
 </div>
 
 <hr />
@@ -19,22 +19,23 @@
                 </tr>
                 <tr> </tr>
                 <tr> </tr>
+                <tr> </tr>
             </thead>
-            @foreach (var cat in Model)
+            @foreach (var prod in Model.Products)
             {
                 <tbody>
                     <tr>
-                        <td><a href="@Url.Action("ProductList","Product", new {categoryId = cat.Id })">
-                            &nbsp;&nbsp; <span><img src="@cat.Image" id="Img_logo"></span><b> @cat.Name </b> </a></td>
+                        <td> &nbsp;&nbsp; <span><img src="@prod.Image" id="Img_logo"></span><b> @prod.Name </b> </td>
+                        <td>@prod.Discription</td>
                         <td>
-                            <form asp-action="Edit" asp-route-id="@cat.Id" method="post">
-                                <button type="submit" >
+                            <form asp-action="Edit" asp-route-id="@prod.Id" method="post">
+                                <button type="submit">
                                     Редагувати
                                 </button>
                             </form>
                         </td>
                         <td>
-                            <form asp-action="Delete" asp-route-id="@cat.Id" method="post">
+                            <form asp-action="Delete" asp-route-id="@prod.Id" method="post">
                                 <button type="submit" class="btn btn-sm btn-danger">
                                     Видалити
                                 </button>
@@ -55,12 +56,14 @@
         border-radius: 4px;
         padding: 10px;
     }
+
     #cat {
         background-color: #f1f1f1;
         border: 1px solid #ddd;
         border-radius: 4px;
         padding: 10px;
     }
+
     #container {
         background-color: aliceblue;
         border: 1px solid #ddd;
@@ -68,4 +71,3 @@
         padding: 25px;
     }
 </style>
-

@@ -1,0 +1,29 @@
+﻿@model WebStore.Models.DbModel.Product
+
+<div id="conteiner">
+    <h4> <b id="text"> @Model.Name </b></h4>
+</div>
+<hr />
+
+<div id="container">
+
+        <div id="container">
+            <p>@Model.Number</p>
+            <p>@Model.Category.Name</p>
+            <ul>
+                <li> <img src="@Model.Image" /><h4><b>@Model.Name</b></h4></li>
+                <li><hr /></li>
+                <li><b id="text"> @Model.PriceGoods &nbsp;грн</b></li>
+                <li><hr /></li>
+                <li> <h5 id="container">@Model.Discription</h5></li>
+                <li></li>
+            </ul>
+        </div>
+</div>
+
+<style>
+    #text{
+    color:brown;
+    }
+</style>
+

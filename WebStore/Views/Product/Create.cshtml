@@ -1,0 +1,36 @@
+﻿@model WebStore.Models.ViewModel.Products.CreateProductSubmitVm
+
+<form asp-action="CreateSubmit" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label for="Name">Назва</label>
+        <input name="Name" class="form-control" />
+    </div>
+    <br />
+    <!-- Image -->
+    <div class="form-group">
+        <h4>Зображення</h4>
+        <div class="col-md-10">
+            <input type="file" name="Image" class="form-control" />
+        </div>
+    </div>
+    <h3> Категорія :</h3>
+
+    @Html.DropDownList("CategoryId", Model.Categories);
+    @*<select for="CategoryId" asp-items="@Model.Categories">
+            <option>Виберіть</option>
+        </select>*@
+
+    <div class="form-group">
+        <label for="PriceGoods">Ціна</label>
+        <input type="number" step="0.01" name="PriceGoods" class="form-control" />
+    </div>
+    <hr />
+    <div class="form-group">
+        <label for="Discription">Опис</label>
+        <input name="Discription" class="form-control" />
+    </div>
+    <hr />
+    <button type="submit" class="btn btn-primary">Добавити</button>
+</form>
+

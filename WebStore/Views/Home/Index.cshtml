@@ -4,9 +4,9 @@
 @if (Model != null && Model.RoleName == "Admin")
 {
 <div class="topMenu">
-    <div id="contMenu">
-        <a asp-action="" asp-controller="">Товари </a>
-    </div>
+    @*<div id="contMenu">
+        <a asp-action="Index" asp-controller="Category">Товари </a>
+    </div>*@
     <div id="contMenu">
         <a asp-action="Index" asp-controller="Category">Категорії </a>
     </div>
@@ -28,16 +28,11 @@
     <span id="text_logo" ><b>HandMade_shop</b> - товари ручної роботи</span>
 </div>
 
-  
-
-
 
 <hr />
 
 <h5 id="container"><b>Групи роварів і послуг</b></h5>
 <hr />
-
-
 
 <div class="back" style="display: inline;">
     @foreach (var cat in Model.CategoryVm)
@@ -48,15 +43,7 @@
                       })"> <img src="@cat.Img" style="width: 100%;"><h4>@cat.Name</h4></a>
     }
 
-    @*<a class="second" href="@Url.ActionLink("Index", "Product", new
-                      {
-                          //categoryId =
-                      })"><img src="~/images/Skatertyna/skatertuna.jpg" style="width: 100%;"><h4>Скатертини, коврики</h4></a>
-
-    <a class="second" href="@Url.ActionLink("Index", "Product", new
-                      {
-                          //categoryId =
-                      })"><img src="~/images/Shampun/shampoo_2.jpg" style="width: 100%;"> <h4>Тверді шампун</h4></a>*@
+ 
 </div>
 
   
