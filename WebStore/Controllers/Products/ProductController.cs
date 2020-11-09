@@ -35,15 +35,20 @@ namespace WebStore.Controllers.Products
             //this.signInManager = signInManager;
         }
 
-       
-        public ActionResult Index(Guid categoryId)
+
+        public ActionResult Index(Guid categoryId, string name = null, string priceGoods = null)
         {
-         
+
             var category = this.dbContext.Categories.FirstOrDefault(cat => cat.Id == categoryId);
 
             var products = this.dbContext.Products.Where(pr => pr.CategoryId == category.Id).ToList();
-            var model = new List<ProductVm>();
-            model = products.Select(pr => new ProductVm()
+            var model = new ProductsVm()
+            {
+                //Products =  List<ProductVm>()
+                CategoryId = category.Id,
+                CategoryName = category.Name,
+            };
+            model.Products = products.Select(pr => new ProductVm()
             {
                 Id = pr.Id,
                 Name = pr.Name,
@@ -52,23 +57,25 @@ namespace WebStore.Controllers.Products
                 Image = pr.Image,
                 Discription = pr.Discription,
 
-                CategoryId = pr.CategoryId
+                //CategoryId = pr.CategoryId,
+                //CategoryName = category.Name,
             }).ToList() ;
             return View(model);
         }
         
-        public ActionResult ProductList(Guid categoryId)
+        public ActionResult ProductList(Guid categoryId, string name = null, string priceGoods = null)
         {
 
             var userName = HttpContext.User.Identity.Name;
-
-             var model = new ProductsViewModel()
-             {
-                 Products = new List<ProductVm>()
-             };
-   
-
+          
             var category = this.dbContext.Categories.FirstOrDefault(cat => cat.Id == categoryId);
+            var model = new ProductsViewModel()
+            {
+                Products = new List<ProductVm>(),
+                //CategoryId = category.Id
+                CategoryName = category.Name
+            };
+
 
             var products = this.dbContext.Products.Where(pr => pr.CategoryId == category.Id);
            var productList = products.OrderByDescending(p => p.Number).ToList();
@@ -82,8 +89,8 @@ namespace WebStore.Controllers.Products
 
                 Discription = pr.Discription,
 
-                CategoryId = pr.CategoryId
             }).ToList();
+
             return View(model);
         }
 
@@ -128,7 +135,20 @@ namespace WebStore.Controllers.Products
         public async Task<IActionResult> CreateSubmit(CreateProductSubmitVm model, IFormFile Image)
         {
             var category = this.dbContext.Categories.FirstOrDefault(cat => cat.Id == model.CategoryId);
-            var number = this.dbContext.Products.Count();
+           
+            var scatId = Guid.Parse("959e0d03-044d-4ca2-a210-f2bba7680896");
+            var symcaId = Guid.Parse("030be0f0-6d44-43a0-b278-df478caffbad");
+            var shampId = Guid.Parse("23a2a828-3ba6-4403-a068-92168f0b02cb");
+            var number = this.dbContext.Products.Where(p => p.CategoryId == category.Id).Count();
+            if (category.Id == scatId)
+            {            
+                number = number + 500;
+            }
+            else if (category.Id == scatId)
+            {
+                number = number + 1000;
+            }
+           
             var newProduct = new Product()
             {
                 Id = Guid.NewGuid(),

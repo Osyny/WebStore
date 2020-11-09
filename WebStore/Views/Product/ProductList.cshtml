@@ -1,12 +1,20 @@
 ﻿@model WebStore.Models.ViewModel.Products.ProductsViewModel
 
-<div id="conteiner">
-    <h4 style="color:brown; margin-left: 100px;"> <b> Сумки ручної роботи </b></h4>
-</div>
-
 <div id="container">
-    <span id="cat"> <a asp-action="Create">Добавити нову</a></span>
+      <h4 style="color:brown;text-align:center;"> <b>&nbsp; &nbsp; @Model.CategoryName </b></h4>
+
 </div>
+<hr />
+
+<form asp-action="Index" asp-controller="Product">
+    &nbsp;&nbsp;
+    <input type="hidden" name="categoryId" value="@Model.CategoryId" />
+    <input type="text" name="priceGoods" placeholder=" Пошук по ціні" />
+    <input type="text" name="name" placeholder=" Пошук по назві  " />
+    <button type="submit"> Пошук </button>
+    &nbsp; &nbsp;&nbsp;
+    <span id="newcat"> <a asp-action="Create">Добавити нову</a></span>
+</form>
 
 <hr />
 @if (Model != null)
@@ -67,7 +75,7 @@
         padding: 5px;
     }
 
-    #cat {
+    #newcat {
         background-color: #f1f1f1;
         border: 1px solid #ddd;
         border-radius: 4px;
