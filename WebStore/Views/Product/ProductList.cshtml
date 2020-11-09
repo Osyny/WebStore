@@ -15,17 +15,26 @@
         <table class="table">
             <thead>
                 <tr>
+                    <th>Номер</th>
+                    <th></th>
                     <th>Назва</th>
+                    <th>Ціна</th>
+                    <th>Опис</th>
+                    <th></th>
+                    <th></th>
                 </tr>
-                <tr> </tr>
-                <tr> </tr>
-                <tr> </tr>
+
             </thead>
-            @foreach (var prod in Model.Products)
-            {
-                <tbody>
+            <tbody>
+                @foreach (var prod in Model.Products)
+                {
+
+
                     <tr>
-                        <td> &nbsp;&nbsp; <span><img src="@prod.Image" id="Img_logo"></span><b> @prod.Name </b> </td>
+                        <td>@prod.Number</td>
+                        <td><img id="Img_logo" src="@prod.Image"></td>
+                        <td><b> @prod.Name </b></td>
+                        <td><b>@prod.PriceGoods&nbsp; грн</b></td>
                         <td>@prod.Discription</td>
                         <td>
                             <form asp-action="Edit" asp-route-id="@prod.Id" method="post">
@@ -43,18 +52,19 @@
                         </td>
 
                     </tr>
-                </tbody>
-            }
+
+                }
+            </tbody>
         </table>
     </div>
 }
 
 <style>
     #Img_logo {
-        width: 15%;
+        width: 80%;
         border: 1px solid #ddd;
         border-radius: 4px;
-        padding: 10px;
+        padding: 5px;
     }
 
     #cat {

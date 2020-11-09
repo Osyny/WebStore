@@ -1,25 +1,26 @@
 ﻿@model IEnumerable<WebStore.Models.DbModel.AccountUser>
-<hr />
-<div class="cont" id="container">
-    <h3 style="text-align:center;">Кабінет Admin</h3>
 
+<div id="container">
+    <div >
+        &nbsp;&nbsp;&nbsp;
+        <a class="cont"  asp-action="Index" asp-controller="Roles" asp-route-userid=""><b>Ролі</b></a>
+        &nbsp;&nbsp;&nbsp;
+        <a class="cont"  asp-action="UserList" asp-controller="Roles"><b>Користувачі</b></a>
+        &nbsp;&nbsp;&nbsp;
+        <a class="cont"  asp-action="Index" asp-controller="Category"><b>Категорії товарів</b></a>
+
+    </div>
 </div>
 <hr />
-<div class="cont" id="container">
-    @*<a asp-action="Create" asp-controller="Roles">Добавити роль</a>*@
-    &nbsp;&nbsp;&nbsp;
-    <a style=" background-color: #f1f1f1;" asp-action="Index" asp-controller="Roles" asp-route-userid=""><h4><b>Ролі</b></h4></a>
-    &nbsp;&nbsp;&nbsp;
-    <a style=" background-color: #f1f1f1;" asp-action="UserList" asp-controller="Roles"><h4><b>Користувачі</b></h4></a>
-    &nbsp;&nbsp;&nbsp;
-    <a style="background-color: #f1f1f1;" asp-action="Index" asp-controller="Category"><h4><b>Категорії товарів</b></h4></a>
+<div id="container">
+    <h3 style="text-align:center;">Кабінет Admin</h3>
 
 </div>
 <hr />
 <h3>Список користувачів</h3>
 <hr />
 
-<div class="cont" id="container">
+<div id="container">
     <table class="table">
         @foreach (var user in Model)
         {
@@ -44,12 +45,30 @@
 
 <style>
     #container {
+        
         background-color: aliceblue;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 25px;
     }
 
     .cont {
+        width: 30%;
+        margin-left: 20px;
         border: 1px solid #ddd;
         border-radius: 4px;
         padding: 5px;
+        background-color: #f1f1f1;
+    }
+
+    #contMenu {
+        background: #f1f1f1;
+        font-weight: bold;
+        float: left;
+        margin-left: 15px;
+        margin-right: 15px;
+        margin-bottom: 50px;
+        text-align: center;
+        padding: 10px;
     }
 </style>

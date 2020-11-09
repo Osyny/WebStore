@@ -1,20 +1,21 @@
 ﻿@model WebStore.Models.ViewModel.Products.ProductEditVm
 
-<div id="conteiner">
+<div id="container">
     <h4> <b> Редагування </b></h4>
 </div>
 <hr />
 
 
-<form asp-action="CreateSubmit" method="post" enctype="multipart/form-data">
+<form asp-action="EditSubmit" method="post" enctype="multipart/form-data">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-    <div id="conteiner">
-
+    <div id="container">
+        <input type="hidden" name="Id" value="@Model.Id" />
         <div class="form-group">
             <label for="Name">Назва</label>
             <input name="Name" class="form-control" value="@Model.Name" />
         </div>
+        <hr />
         <!-- Image -->
         <div class="form-group">
 
@@ -25,20 +26,25 @@
         </div>
 
         @*<select for="CategoryId" asp-items="@Model.Categories">
-                <option>Виберіть</option>
-            </select>*@
-
-        <h5>Категорія - <b style="color:brown;">@Model.CategoryName</b></h5>
-        @Html.DropDownList("FamilyStatusId", Model.Categories);
+            <option>Виберіть</option>
+        </select>*@
+        <hr />
+        <h5>Категорія </h5>
+        @Html.DropDownList("CategoryId", Model.Categories, Model.CategoryName);
         <hr />
         <div class="form-group">
             <label for="PriceGoods"><b>Ціна</b></label>
-            <input type="number" step="0.01" name="PriceGoods" class="form-control" value="@Model.PriceGoods" />
+            <input type="text" name="PriceGoods" class="form-control" value="@Model.PriceGoods" />
         </div>
         <hr />
         <div class="form-group">
             <label for="Discription"><b>Опис</b></label>
             <input name="Discription" class="form-control" value="@Model.Discription" />
+        </div>
+        <br />
+        <div class="form-group">
+            <label for="DiscriptionFull"><b>Детальний опис</b></label>
+            <input name="DiscriptionFull" class="form-control" value="@Model.DiscriptionFull" />
         </div>
 
         <button type="submit" class="btn btn-primary">Добавити</button>

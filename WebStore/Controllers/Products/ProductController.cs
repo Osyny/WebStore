@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -40,7 +41,7 @@ namespace WebStore.Controllers.Products
          
             var category = this.dbContext.Categories.FirstOrDefault(cat => cat.Id == categoryId);
 
-            var products = this.dbContext.Products.Where(pr => pr.CategoryId == category.Id);
+            var products = this.dbContext.Products.Where(pr => pr.CategoryId == category.Id).ToList();
             var model = new List<ProductVm>();
             model = products.Select(pr => new ProductVm()
             {
@@ -49,6 +50,7 @@ namespace WebStore.Controllers.Products
                 Number = pr.Number,
                 PriceGoods = pr.PriceGoods,
                 Image = pr.Image,
+                Discription = pr.Discription,
 
                 CategoryId = pr.CategoryId
             }).ToList() ;
@@ -64,34 +66,13 @@ namespace WebStore.Controllers.Products
              {
                  Products = new List<ProductVm>()
              };
-            //if (userName != null)
-            //{
-            //    AccountUser accountUser = await userManager.FindByNameAsync(userName);
-            //    string userRoles = "";
-            //    if (this.signInManager.IsSignedIn(User))
-            //    {
-            //        if (User.Identity.IsAuthenticated)
-            //        {
-
-            //            if (User.IsInRole("Admin"))
-            //            {
-            //                userRoles = "Admin";
-            //            }
-            //            else if (User.IsInRole("User"))
-            //            {
-            //                userRoles = "User";
-            //            }
-            //        }
-            //    }
-            //    model.RoleName = userRoles;
-            //    model.AccountUser = accountUser;
-
-            //}
+   
 
             var category = this.dbContext.Categories.FirstOrDefault(cat => cat.Id == categoryId);
 
-            var products = this.dbContext.Products.Where(pr => pr.CategoryId == category.Id).ToList();
-            model.Products = products.Select(pr => new ProductVm()
+            var products = this.dbContext.Products.Where(pr => pr.CategoryId == category.Id);
+           var productList = products.OrderByDescending(p => p.Number).ToList();
+            model.Products = productList.Select(pr => new ProductVm()
             {
                 Id = pr.Id,
                 Name = pr.Name,
@@ -109,9 +90,23 @@ namespace WebStore.Controllers.Products
         public ActionResult About(Guid id)
         {
           
-            var product = this.dbContext.Products.Where(pr => pr.Id == id).ToList();
+            var product = this.dbContext.Products
+                .Include(pr => pr.Category)
+                .FirstOrDefault(pr => pr.Id == id);
 
-            return View(product);
+            var model = new AboutProductVm()
+            {
+                Id= product.Id,
+                CategoryName = product.Category.Name,
+                Name = product.Name,
+                Number = product.Number,
+                Image = product.Image,
+                PriceGoods = product.PriceGoods,
+                Discription = product.Discription,
+                DiscriptionFull = product.DiscriptionFull
+            };
+
+            return View(model);
         }
 
         public IActionResult Create()
@@ -141,7 +136,9 @@ namespace WebStore.Controllers.Products
                 PriceGoods = model.PriceGoods,
                 Number = number+1,
                 CategoryId = category.Id,
-                Discription = model.Discription
+                Discription = model.Discription,
+                DiscriptionFull = model.DiscriptionFull,
+                DateCreate = DateTime.Now
             };
             if (Image != null)
             {
@@ -181,6 +178,7 @@ namespace WebStore.Controllers.Products
                 Image = product.Image,
                 PriceGoods = product.PriceGoods,
                 Discription = product.Discription,
+                DiscriptionFull = product.DiscriptionFull,
                 Number = product.Number,
 
                 CategoryName = product.Category.Name,
@@ -222,8 +220,13 @@ namespace WebStore.Controllers.Products
                 }
             }
             upProduct.Name = model.Name;
-            upProduct.CategoryId = model.CategoriId;
+            if(model.CategoryId != Guid.Empty)
+            {
+                upProduct.CategoryId = model.CategoryId;
+            }
+            
             upProduct.Discription = model.Discription;
+            upProduct.DiscriptionFull = model.DiscriptionFull;
             upProduct.PriceGoods = model.PriceGoods;
            
 
@@ -231,7 +234,7 @@ namespace WebStore.Controllers.Products
             this.dbContext.SaveChanges();
 
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(ProductList), new { categoryId = upProduct.CategoryId });
         }
 
         [HttpPost]
@@ -242,6 +245,9 @@ namespace WebStore.Controllers.Products
             if (prod != null)
             {
                 var result = this.dbContext.Products.Remove(prod);
+               
+                this.dbContext.SaveChanges();
+
             }
             return RedirectToAction(nameof(ProductList), new { categoryId = catId });
         }

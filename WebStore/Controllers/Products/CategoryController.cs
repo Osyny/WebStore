@@ -38,13 +38,14 @@ namespace WebStore.Controllers.Products
             var newCategory = new Category()
             {
                 Id = Guid.NewGuid(),
-                Name = name
+                Name = name,
+                DateCreate =DateTime.Now
 
             };
             if (Image != null)
             {
                 string falename = Image.FileName;
-                string path = $"/files/{name}";
+                string path = $"/files/{falename}";
                 string serverPath = $"{this.environment.WebRootPath}{path}";
                 FileStream fs = new FileStream(serverPath, FileMode.Create,
                     FileAccess.Write);

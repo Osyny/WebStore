@@ -31,19 +31,20 @@
 
 <hr />
 
-<h5 id="container"><b>Групи роварів і послуг</b></h5>
+<h5 ><b style="color:brown">Групи роварів і послуг</b></h5>
 <hr />
 
-<div class="back" style="display: inline;">
-    @foreach (var cat in Model.CategoryVm)
-    {
-        <a class="first" href="@Url.ActionLink("Index", "Product", new
+<div class="back" >
+    <div style="display: inline;">
+        @foreach (var cat in Model.CategoryVm)
+        {
+            <a class="first" href="@Url.ActionLink("Index", "Product", new
                       {
                           categoryId = cat.Id
                       })"> <img src="@cat.Img" style="width: 100%;"><h4>@cat.Name</h4></a>
-    }
+                }
 
- 
+    </div>
 </div>
 
   

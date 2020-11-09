@@ -1,36 +1,61 @@
 ﻿@model WebStore.Models.ViewModel.Products.CreateProductSubmitVm
 
-<form asp-action="CreateSubmit" method="post" enctype="multipart/form-data">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <div class="form-group">
-        <label for="Name">Назва</label>
-        <input name="Name" class="form-control" />
+    <div id="container">
+        <h4 id="text"> <b> Добавити новий товар </b></h4>
     </div>
-    <br />
-    <!-- Image -->
-    <div class="form-group">
-        <h4>Зображення</h4>
-        <div class="col-md-10">
-            <input type="file" name="Image" class="form-control" />
-        </div>
-    </div>
-    <h3> Категорія :</h3>
+    <hr />
 
-    @Html.DropDownList("CategoryId", Model.Categories);
-    @*<select for="CategoryId" asp-items="@Model.Categories">
+    <form asp-action="CreateSubmit" method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div id="container">
+            <div class="form-group">
+                <label for="Name"><b>Назва</b></label>
+                <input name="Name" class="form-control" />
+            </div>
+            <br />
+            <!-- Image -->
+            <div class="form-group">
+                <h5>Зображення</h5>
+                <div class="col-md-10">
+                    <input type="file" name="Image" class="form-control" />
+                </div>
+            </div>
+            <h5> Категорія :</h5>
+
+            @Html.DropDownList("CategoryId", Model.Categories);
+            @*<select for="CategoryId" asp-items="@Model.Categories">
             <option>Виберіть</option>
         </select>*@
 
-    <div class="form-group">
-        <label for="PriceGoods">Ціна</label>
-        <input type="number" step="0.01" name="PriceGoods" class="form-control" />
-    </div>
-    <hr />
-    <div class="form-group">
-        <label for="Discription">Опис</label>
-        <input name="Discription" class="form-control" />
-    </div>
-    <hr />
-    <button type="submit" class="btn btn-primary">Добавити</button>
-</form>
+            <div class="form-group">
+                <label for="PriceGoods"><b>Ціна</b></label>
+                <input type="number" name="PriceGoods" class="form-control" />
+            </div>
+            <hr />
+            <div class="form-group">
+                <label for="Discription"><b>Опис</b></label>
+                <input name="Discription" class="form-control" />
+            </div><br />
+            <div class="form-group">
+                <label for="DiscriptionFull"><b>Детальний опис</b></label>
+                <input name="DiscriptionFull" class="form-control" value="@Model.DiscriptionFull" />
+            </div>
+            <hr />
+            <button type="submit" class="btn btn-primary"><b>Добавити</b></button>
+
+        </div>
+    </form>
+
+    <style>
+        #text{
+            color:brown
+        }
+        #container {
+            background-color: aliceblue;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 25px;
+        }
+    </style>
 

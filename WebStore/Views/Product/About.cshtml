@@ -1,29 +1,38 @@
-﻿@model WebStore.Models.DbModel.Product
+﻿@model WebStore.Models.ViewModel.Products.AboutProductVm
 
-<div id="conteiner">
-    <h4> <b id="text"> @Model.Name </b></h4>
+<div id="container">
+    <h4 id="text"> <b>@Model.Name </b></h4>
+    <p>Номер - @Model.Number</p>
+    <hr />
 </div>
 <hr />
 
+
 <div id="container">
 
-        <div id="container">
-            <p>@Model.Number</p>
-            <p>@Model.Category.Name</p>
-            <ul>
-                <li> <img src="@Model.Image" /><h4><b>@Model.Name</b></h4></li>
-                <li><hr /></li>
-                <li><b id="text"> @Model.PriceGoods &nbsp;грн</b></li>
-                <li><hr /></li>
-                <li> <h5 id="container">@Model.Discription</h5></li>
-                <li></li>
-            </ul>
-        </div>
+    <div style="text-align: center;"> <img src="@Model.Image" /></div>
+    <hr />
+    <div><b id="text">Ціна: @Model.PriceGoods</b> &nbsp;грн</div>
+   <hr />
+    <div style="text-align: center;"> @Model.Discription</div>
+    <br />
+    <div id="container" style="text-align: center;"> <b>@Model.DiscriptionFull</b></div>
+
 </div>
 
+
 <style>
-    #text{
-    color:brown;
+    #text {
+        color: brown;
+        text-align: center;
+        margin-left: 80px;
+    }
+
+    #container {
+        background-color: aliceblue;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 25px;
     }
 </style>
 

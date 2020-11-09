@@ -14,6 +14,7 @@ namespace WebStore.Models.ViewModel.Products
         public int Number { get; set; }
         public string Image { get; set; }
         public string Discription { get; set; }
+        public string DiscriptionFull { get; set; }
         public Guid CategoryId { get; set; }
 
         public List<SelectListItem> Categories { get; set; }
