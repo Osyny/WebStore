@@ -50,18 +50,23 @@
 <div id="container">
     @foreach (var pr in Model.Products)
     {
-        <div class="card" id="cardBord">
-            <a href="@Url.Action("About", "Product", new { Id = pr.Id })">
-                <img src="@pr.Image" alt="Avatar" style="max-width: 100%; height: auto;">
-                <h5><b>@pr.Name</b></h5>
-            </a>
-            <div class="conteiner">
-                <h4><b>@pr.PriceGoods &nbsp;грн</b></h4>
-                <hr />
-                <p>@pr.Discription</p>
-            </div>
-
+    <div class="card" id="cardBord">
+        <a href="@Url.Action("About", "Product", new { Id = pr.Id })">
+            <img src="@pr.Image" alt="Avatar" style="max-width: 100%; height: auto;">
+            <h5><b>@pr.Name</b></h5>
+        </a>
+        <div class="conteiner">
+            <h4><b>@pr.PriceGoods &nbsp;грн</b></h4>
+            <hr />
+            <p>@pr.Discription</p>
         </div>
+        <form asp-controller="Basket" asp-action="Buy" asp-route-userId="@Model.UserId" method="post">
+            <input type="hidden" name="productId" value="@pr.Id" />
+            <input type="hidden" name="userId" value="@Model.UserId" />
+            <p><button id="button">Купити</button></p>
+        </form>
+
+    </div>
     }
 </div>
 
@@ -113,5 +118,23 @@
 
         #cardBord:hover {
             box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        }
+
+    #button {
+        border: none;
+        outline: 0;
+        display: inline-block;
+        padding: 8px;
+        color: white;
+        background-color: #0B5345;
+        text-align: center;
+        cursor: pointer;
+        width: 100%;
+        font-size: 18px;
+    }
+
+
+        button:hover, a:hover {
+            opacity: 0.7;
         }
 </style>

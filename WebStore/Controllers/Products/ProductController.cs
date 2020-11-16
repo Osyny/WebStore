@@ -20,26 +20,30 @@ namespace WebStore.Controllers.Products
     {
         private ApplicationContext dbContext;
         private IHostingEnvironment environment;
-        //private UserManager<AccountUser> userManager;
+        private UserManager<AccountUser> userManager;
         //private SignInManager<AccountUser> signInManager;
 
-        public ProductController(/*UserManager<AccountUser> userManager,*/ 
+        public ProductController(UserManager<AccountUser> userManager,
             ApplicationContext dbContext,
-            SignInManager<AccountUser> signInManager, IHostingEnvironment environment)
+            SignInManager<AccountUser> signInManager, 
+            IHostingEnvironment environment)
         {
             this.dbContext = dbContext;
             this.environment = environment;
 
             this.dbContext = dbContext;
-            //this.userManager = userManager;
+            this.userManager = userManager;
             //this.signInManager = signInManager;
         }
 
 
-        public ActionResult Index(Guid categoryId, string name = null, string priceGoods = null)
+        public async Task<ActionResult> IndexAsync(Guid categoryId, Guid userId, string name = null, string priceGoods = null)
         {
 
             var category = this.dbContext.Categories.FirstOrDefault(cat => cat.Id == categoryId);
+            var userName = HttpContext.User.Identity.Name;
+            AccountUser accountUser = await userManager.FindByNameAsync(userName);
+
 
             var products = this.dbContext.Products.Where(pr => pr.CategoryId == category.Id).ToList();
             if(!string.IsNullOrEmpty(name))
@@ -57,10 +61,15 @@ namespace WebStore.Controllers.Products
             }
             var model = new ProductsVm()
             {
-                //Products =  List<ProductVm>()
                 CategoryId = category.Id,
                 CategoryName = category.Name,
+               
             };
+            if(accountUser!= null)
+            {
+                var user = dbContext.Userss.FirstOrDefault(u => u.AccountUser == accountUser);
+                model.UserId = user.Id;
+            }
             model.Products = products.Select(pr => new ProductVm()
             {
                 Id = pr.Id,

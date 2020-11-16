@@ -21,7 +21,8 @@ namespace WebStore.Models.ViewModel.Products
     {
         public List<ProductVm> Products { get; set; }
 
-         public Guid CategoryId { get; set; }
+        public Guid? UserId { get; set; }
+        public Guid CategoryId { get; set; }
         public string CategoryName { get; set; }
         public string PriceGoods { get; set; }
         public string Name { get; set; }
