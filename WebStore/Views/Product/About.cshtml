@@ -2,21 +2,20 @@
 
 <div id="container">
     <h4 id="text"> <b>@Model.Name </b></h4>
-    <p id="container"> Номер - @Model.Number</p>
-    <hr />
+    <h5 id="text"> Номер - @Model.Number</h5>
 </div>
 <hr />
 
 
 <div id="container">
 
-    <div style="text-align: center;"> <img src="@Model.Image" /></div>
+    <div style="text-align: center;"> <img style="width: 60%;" src="@Model.Image" /></div>
     <hr />
-    <div><h4 id="text">Ціна: @Model.PriceGoods</h4> &nbsp;грн</div>
+    <div><h4 id="text">Ціна: @Model.PriceGoods &nbsp;грн</h4> </div>
    <hr />
     <div style="text-align: center;"> @Model.Discription</div>
     <br />
-    <div id="container" style="text-align: center;"> <b>@Model.DiscriptionFull</b></div>
+    <div id="container" style="text-align:center;"> <b>@Model.DiscriptionFull</b></div>
 
 </div>
 

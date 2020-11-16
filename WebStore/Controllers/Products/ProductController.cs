@@ -42,6 +42,19 @@ namespace WebStore.Controllers.Products
             var category = this.dbContext.Categories.FirstOrDefault(cat => cat.Id == categoryId);
 
             var products = this.dbContext.Products.Where(pr => pr.CategoryId == category.Id).ToList();
+            if(!string.IsNullOrEmpty(name))
+            {
+                var foundProd = products.Where(p => p.Name.Contains(name));
+                products = foundProd.ToList();
+            } 
+            if(!string.IsNullOrEmpty(priceGoods))
+            {
+                decimal c = decimal.Parse(priceGoods);
+
+                var foundProd = products.Where(p => p.PriceGoods == c);
+
+                products = foundProd.ToList();
+            }
             var model = new ProductsVm()
             {
                 //Products =  List<ProductVm>()
@@ -144,7 +157,7 @@ namespace WebStore.Controllers.Products
             {            
                 number = number + 500;
             }
-            else if (category.Id == scatId)
+            else if (category.Id == shampId)
             {
                 number = number + 1000;
             }
@@ -224,7 +237,7 @@ namespace WebStore.Controllers.Products
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+          //  if (ModelState.IsValid)
             {
 
                 if (Image != null)

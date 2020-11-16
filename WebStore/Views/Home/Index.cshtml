@@ -3,19 +3,19 @@
 
 @if (Model != null && Model.RoleName == "Admin")
 {
-<div class="topMenu">
-    @*<div id="contMenu">
-        <a asp-action="Index" asp-controller="Category">Товари </a>
-    </div>*@
-    <div id="contMenu">
-        <a asp-action="Index" asp-controller="Category">Категорії </a>
-    </div>
-    <div id="contMenu">
-        <a asp-action="UserList" asp-controller="Roles">Користувачі </a>
-    </div>
+    <div class="topMenu">
+        @*<div id="contMenu">
+                <a asp-action="Index" asp-controller="Category">Товари </a>
+            </div>*@
+        <div id="contMenu">
+            <a asp-action="Index" asp-controller="Category">Категорії </a>
+        </div>
+        <div id="contMenu">
+            <a asp-action="UserList" asp-controller="Roles">Користувачі </a>
+        </div>
 
 
-</div>
+    </div>
 
 }
 <br />
@@ -25,48 +25,57 @@
 
 <div id="container">
     <img style=" width: 10%;" src="~/images/logo.png" />
-    <span id="text_logo" ><b>HandMade_shop</b> - товари ручної роботи</span>
+    <span id="text_logo"><b>HandMade_shop</b> - товари ручної роботи</span>
 </div>
 
 
 <hr />
 
-<h5 ><b style="color:brown">Групи роварів і послуг</b></h5>
+<h5><b style="color:brown">Групи роварів і послуг</b></h5>
 <hr />
 
-<div class="back" >
-    <div style="display: inline;">
-        @foreach (var cat in Model.CategoryVm)
-        {
-            <a class="first" href="@Url.ActionLink("Index", "Product", new
+<div id="container">
+    @*<div style="display: inline;">*@
+
+    @foreach (var cat in Model.CategoryVm)
+    {
+       
+            <div class="card" id="cardBord">
+                <a href="@Url.ActionLink("Index", "Product", new
                       {
                           categoryId = cat.Id
                       })"> <img src="@cat.Img" style="width: 100%;"><h4>@cat.Name</h4></a>
-                }
+                </div>
+        
+        }
 
-    </div>
 </div>
 
-  
+
 <style>
 
-    .back a {
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+        border-radius: 5px; /* 5px rounded corners */
         width: 30%;
-        margin-left: 10px;
-        margin-right: 10px;
-        float: left;
-        display: block;
-
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        padding: 5px;
+        display: inline-block;
+        text-align: center;
+        margin-left: 15px;
+        margin-bottom: 10px;
     }
+
+        .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        }
+
+   
 
     #text_logo {
-        color: saddlebrown;       
+        color: saddlebrown;
         font-size: 25pt;
     }
-   
+
 
     #contMenu {
         background: #f1f1f1;
@@ -85,4 +94,14 @@
         border-radius: 4px;
         padding: 25px;
     }
+
+    #cardBord {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 25px;
+    }
+
+        #cardBord:hover {
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        }
 </style>
