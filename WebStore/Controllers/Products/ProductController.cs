@@ -152,6 +152,7 @@ namespace WebStore.Controllers.Products
             var scatId = Guid.Parse("959e0d03-044d-4ca2-a210-f2bba7680896");
             var symcaId = Guid.Parse("030be0f0-6d44-43a0-b278-df478caffbad");
             var shampId = Guid.Parse("23a2a828-3ba6-4403-a068-92168f0b02cb");
+            var shampMyloId = Guid.Parse("4f1cadba-f733-4fe8-8aba-419131531fd6");
             var number = this.dbContext.Products.Where(p => p.CategoryId == category.Id).Count();
             if (category.Id == scatId)
             {            
@@ -160,6 +161,10 @@ namespace WebStore.Controllers.Products
             else if (category.Id == shampId)
             {
                 number = number + 1000;
+            } 
+            else if (category.Id == shampMyloId)
+            {
+                number = number + 10000;
             }
            
             var newProduct = new Product()
