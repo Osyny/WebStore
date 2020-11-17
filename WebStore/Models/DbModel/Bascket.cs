@@ -12,7 +12,7 @@ namespace WebStore.Models.DbModel
         public Guid ProductId { get; set; }
 
         public User User { get; set; }
-        public Guid UserId { get; set; }
+        public Guid? UserId { get; set; }
 
         public int Number { get; set; }
         public DateTime DateRegister { get; set; }

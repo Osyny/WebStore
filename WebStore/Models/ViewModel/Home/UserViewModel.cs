@@ -9,7 +9,8 @@ namespace WebStore.Models.ViewModel.Home
     public class UserViewModel
     {
         public string RoleName { get; set; }
-        public AccountUser AccountUser { get; set; }
+        public User? User { get; set; }
+        public int CountProducts { get; set; }
         public List<CategoryVm> CategoryVm { get; set; }
     }
     public class CategoryVm

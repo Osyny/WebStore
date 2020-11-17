@@ -1,6 +1,7 @@
 ﻿@model WebStore.Models.ViewModel.Home.UserViewModel
 
 
+
 @if (Model != null && Model.RoleName == "Admin")
 {
     <div class="topMenu">
@@ -14,12 +15,17 @@
             <a asp-action="UserList" asp-controller="Roles">Користувачі </a>
         </div>
 
-
     </div>
 
 }
-<br />
-<br />
+<div >
+    <a id="conteiner" asp-action="Index" asp-controller="Basket" asp-route-userId="@Model.User?.Id">
+        <img style="width: 5%;" src="~/images/basket.PNG" />(@Model.CountProducts)
+    </a>
+</div>
+
+
+
 <hr />
 
 
@@ -39,20 +45,26 @@
 
     @foreach (var cat in Model.CategoryVm)
     {
-       
-            <div class="card" id="cardBord">
-                <a href="@Url.ActionLink("Index", "Product", new
+
+        <div class="card" id="cardBord">
+            <a href="@Url.ActionLink("Index", "Product", new
                       {
                           categoryId = cat.Id
                       })"> <img src="@cat.Img" style="width: 100%;"><h4>@cat.Name</h4></a>
                 </div>
-        
-        }
+
+            }
 
 </div>
 
 
 <style>
+    #imgLogo1 {
+        width: 5%;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 5px;
+    }
 
     .card {
         box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -69,7 +81,7 @@
             box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
         }
 
-   
+
 
     #text_logo {
         color: saddlebrown;

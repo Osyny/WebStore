@@ -16,25 +16,46 @@ namespace WebStore.Controllers.Products
         {
             this.dbContext = dbContext;
         }
+
+        public ActionResult Index(Guid userId)
+        {
+            var userBaskets = this.dbContext.Basckets.Where(b => b.UserId == userId).ToList();
+            return View(userBaskets);
+        }
         [HttpPost]
         public IActionResult Buy(Guid userId, Guid productId)
         {
-            if(userId != null)
+            var product = dbContext.Products.FirstOrDefault(pr => pr.Id == productId);
+
+            var newBascet = new Bascket()
+            {
+                Id = Guid.NewGuid(),
+                DateRegister = DateTime.Now,
+                // Number = 
+                ProductId = product.Id
+            };
+            if (userId != null)
             {
                 var user = dbContext.Userss.FirstOrDefault(user => user.Id == userId);
-               
-                //var bascekt = dbContext.Basckets.FirstOrDefault(b => b.UserId == user.Id);
-                var newBascet = new Bascket()
-                {
-                    Id = Guid.NewGuid(),
-                    UserId = user.Id,
-                    DateRegister = DateTime.Now,
-                   // Number = 
-                };
-
+                       
+                
             }
-            
+            this.dbContext.Basckets.Add(newBascet);
+            this.dbContext.SaveChanges();
+          
+
+
             return Content("Додано в корзину!!!"); ;
+        }
+        [HttpPost]
+        public IActionResult Delete(Guid id)
+        {
+            var bascket = this.dbContext.Basckets.FirstOrDefault(b => b.Id == id);
+            if (bascket != null)
+            {
+                var result = this.dbContext.Basckets.Remove(bascket);
+            }
+            return RedirectToAction("Index");
         }
     }
 }

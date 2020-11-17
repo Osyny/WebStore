@@ -42,8 +42,7 @@ namespace WebStore.Controllers.Products
 
             var category = this.dbContext.Categories.FirstOrDefault(cat => cat.Id == categoryId);
             var userName = HttpContext.User.Identity.Name;
-            AccountUser accountUser = await userManager.FindByNameAsync(userName);
-
+           
 
             var products = this.dbContext.Products.Where(pr => pr.CategoryId == category.Id).ToList();
             if(!string.IsNullOrEmpty(name))
@@ -65,8 +64,10 @@ namespace WebStore.Controllers.Products
                 CategoryName = category.Name,
                
             };
-            if(accountUser!= null)
+            if(userName != null)
             {
+                AccountUser accountUser = await userManager.FindByNameAsync(userName);
+
                 var user = dbContext.Userss.FirstOrDefault(u => u.AccountUser == accountUser);
                 model.UserId = user.Id;
             }

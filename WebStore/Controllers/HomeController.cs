@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using WebStore.Models;
 using WebStore.Models.DbModel;
@@ -42,10 +43,17 @@ namespace WebStore.Controllers
             var userName = HttpContext.User.Identity.Name;
           
             UserViewModel model = new UserViewModel();
+            int count = 0;
             if (userName != null)
             {
 
                 AccountUser accountUser = await userManager.FindByNameAsync(userName);
+                User user = this.dbContext.Userss
+                    .Include(u => u.AccountUser)
+                    .FirstOrDefault(u => u.AccountUser == accountUser);
+
+                count = this.dbContext.Basckets.Count(b => b.UserId == user.Id);
+
                 string userRoles = "";
                 if (this.signInManager.IsSignedIn(User))
                 {
@@ -63,9 +71,12 @@ namespace WebStore.Controllers
                     }
                 }
                 model.RoleName = userRoles;
-                model.AccountUser = accountUser;
+                model.User = user;
+               
                 
             }
+            model.CountProducts = count;
+
             var categorys = this.dbContext.Categories.ToList();
             model.CategoryVm = categorys.Any() ? categorys.Select(cat => new CategoryVm()
             {
