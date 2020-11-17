@@ -3,22 +3,28 @@
 @inject SignInManager<WebStore.Models.DbModel.AccountUser> SignInManager
 @inject UserManager<WebStore.Models.DbModel.AccountUser> UserManager
 
+@*@inject List<WebStore.Models.DbModel.User> users;
+@inject List<WebStore.Models.DbModel.Bascket> basckets;*@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
+
     <title>HandMade_shop </title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body >
-    <header id="header" style="background-color: cadetblue;" >
+<body>
+    <header id="header" style="background-color: cadetblue;">
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" title="HandMade_shop">
-                        <img Id="imgLogo1" src="~/images/homeLogo.jpg" /></a>
+                    <img Id="imgLogo1" src="~/images/homeLogo.jpg" />
+                </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -26,7 +32,7 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         @{
-                            var user = UserManager.GetUserName(User);
+                            var userName = UserManager.GetUserName(User);
 
                             string userRoles = "";
                             if (User.Identity.IsAuthenticated)
@@ -41,7 +47,7 @@
                                     userRoles = "User";
                                 }
                             }
-                            if (userRoles != "" || user != null)
+                            if (userRoles != "" || userName != null)
                             {
                                 var i = ViewBag.User;
                                 var r = User.Identity.Name;
@@ -62,6 +68,26 @@
 
                     </ul>
                     @await Html.PartialAsync("_LoginPartial")
+                    @*@{
+                        var accountUser = await UserManager.FindByNameAsync(userName);
+                        WebStore.Models.DbModel.User curentUser = null;
+                        List<WebStore.Models.DbModel.Bascket> userBasckets = null;
+                        if (accountUser != null)
+                        {
+                            curentUser = users
+                                        .FirstOrDefault(u => u.AccountUserId == Guid.Parse(accountUser.Id));
+
+                            userBasckets = basckets.Where(b => b.UserId == curentUser.Id).ToList();
+                        }
+
+
+                    }
+                    <div id="conteiner">
+                        <a asp-action="Index" asp-controller="Basket" asp-route-userId="@curentUser?.Id">
+                            <img style="width: 5%;" src="~/images/basket.PNG" />(@userBasckets.Count())
+                        </a>
+                    </div>*@
+
                 </div>
 
             </div>

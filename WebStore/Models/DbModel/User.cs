@@ -11,6 +11,7 @@ namespace WebStore.Models.DbModel
         public Guid Id { get; set; }
 
         public AccountUser AccountUser { get; set; }
+        public Guid AccountUserId { get; set; }
 
         public DateTime DateRegister { get; set; }
 

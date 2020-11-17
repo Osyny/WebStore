@@ -1,7 +1,17 @@
 ﻿@model List<WebStore.Models.DbModel.Bascket>
 
-
-    <h4 style="color:brown; margin-left: 100px;"> <b> Корзина </b></h4>
+<h4 style="color:brown; margin-left: 100px;"> <b> Корзина </b></h4>
+<hr />
+<div>
+    <div id="contMenu">
+        <a asp-action="" asp-controller="">Оформити замовлення </a>
+    </div>
+    <div id="contMenu">
+        <a asp-action="UserList" asp-controller="Category">Продовжити покупки </a>
+    </div>
+</div>
+<br />
+<br />
 <hr />
 
 @if (Model != null)
@@ -47,21 +57,16 @@
         </table>
     </div>
 }
-<hr />
-<div class="topMenu">
 
-    <div id="contMenu">
-        <a asp-action="" asp-controller="">Оформити замовлення </a>
-    </div>
-    <div id="contMenu">
-        <a asp-action="UserList" asp-controller="Category">Продовжити покупки </a>
-    </div>
-
-
-</div>
 
 
 <style>
+    #Img_logo {
+        width: 80%;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 5px;
+    }
 
     #contMenu {
         background: #f1f1f1;

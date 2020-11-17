@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,9 @@ namespace WebStore.Controllers.Products
 
         public ActionResult Index(Guid userId)
         {
-            var userBaskets = this.dbContext.Basckets.Where(b => b.UserId == userId).ToList();
+            var userBaskets = this.dbContext.Basckets
+                .Include(b => b.Product)
+                .Where(b => b.UserId == userId).ToList();
             return View(userBaskets);
         }
         [HttpPost]
@@ -34,10 +37,10 @@ namespace WebStore.Controllers.Products
                 // Number = 
                 ProductId = product.Id
             };
-            if (userId != null)
+            if (userId != Guid.Empty)
             {
                 var user = dbContext.Userss.FirstOrDefault(user => user.Id == userId);
-                       
+                newBascet.UserId = user.Id;       
                 
             }
             this.dbContext.Basckets.Add(newBascet);
@@ -54,8 +57,9 @@ namespace WebStore.Controllers.Products
             if (bascket != null)
             {
                 var result = this.dbContext.Basckets.Remove(bascket);
+                this.dbContext.SaveChanges();
             }
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index), new { userId = bascket.UserId });
         }
     }
 }
