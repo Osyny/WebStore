@@ -50,9 +50,12 @@ namespace WebStore.Controllers
                 AccountUser accountUser = await userManager.FindByNameAsync(userName);
                 User user = this.dbContext.Userss
                     .Include(u => u.AccountUser)
-                    .FirstOrDefault(u => u.AccountUserId ==Guid.Parse( accountUser.Id));
-
-                count = this.dbContext.Basckets.Where(b => b.UserId == user.Id).ToList().Count;
+                    .FirstOrDefault(u => u.AccountUser == accountUser);
+                if(user != null)
+                {
+                    count = this.dbContext.Basckets.Where(b => b.UserId == user.Id).ToList().Count;
+                }
+               
 
                 string userRoles = "";
                 if (this.signInManager.IsSignedIn(User))

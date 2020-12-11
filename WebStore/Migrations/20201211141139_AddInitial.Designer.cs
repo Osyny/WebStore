@@ -10,8 +10,8 @@ using WebStore.Models;
 namespace WebStore.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20201117195530_FixBasket")]
-    partial class FixBasket
+    [Migration("20201211141139_AddInitial")]
+    partial class AddInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

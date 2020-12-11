@@ -25,10 +25,10 @@
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" title="HandMade_shop">
                     <img Id="imgLogo1" src="~/images/homeLogo.jpg" />
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                @*<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
-                </button>
+                </button>*@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         @{
@@ -57,12 +57,15 @@
                             if (userRoles == "Admin")
                             {
 
-                                <li><a style=" margin-right: 20px;" asp-action="" asp-controller="">Кабінет </a> </li>
+                                <li><a style=" margin-right: 20px;" asp-action="UserList" asp-controller="Roles">Кабінет </a> </li>
+
+                                //<li><a style=" margin-right: 20px;" asp-action="Index" asp-controller="Roles">Users </a> </li>
                             }
                         }
 
 
                         <li>@Html.ActionLink("Контакти", "Contact", "Home")</li>
+
 
 
 

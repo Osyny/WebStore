@@ -25,7 +25,7 @@ namespace WebStore.Controllers.Products
 
         public ProductController(UserManager<AccountUser> userManager,
             ApplicationContext dbContext,
-            SignInManager<AccountUser> signInManager, 
+            SignInManager<AccountUser> signInManager,
             IHostingEnvironment environment)
         {
             this.dbContext = dbContext;
@@ -37,34 +37,39 @@ namespace WebStore.Controllers.Products
         }
 
 
-        public async Task<ActionResult> IndexAsync(Guid categoryId, Guid userId, string name = null, string priceGoods = null)
+        public async Task<ActionResult> IndexAsync(Guid categoryId, Guid userId, string namePrice = null)
         {
 
             var category = this.dbContext.Categories.FirstOrDefault(cat => cat.Id == categoryId);
             var userName = HttpContext.User.Identity.Name;
-           
+
 
             var products = this.dbContext.Products.Where(pr => pr.CategoryId == category.Id).ToList();
-            if(!string.IsNullOrEmpty(name))
+            if (!string.IsNullOrEmpty(namePrice))
             {
-                var foundProd = products.Where(p => p.Name.Contains(name));
-                products = foundProd.ToList();
-            } 
-            if(!string.IsNullOrEmpty(priceGoods))
-            {
-                decimal c = decimal.Parse(priceGoods);
+                var isPrice = decimal.TryParse(namePrice, out decimal price);
+                if (isPrice)
+                {
+                    var foundProdByPrice = products.Where(p => p.PriceGoods == price);
 
-                var foundProd = products.Where(p => p.PriceGoods == c);
+                    products = foundProdByPrice.ToList();
+                }
 
-                products = foundProd.ToList();
+                var foundProdsByName = products.Where(p => p.Name.Contains(namePrice));
+                if (foundProdsByName.Any())
+                {
+                    products = foundProdsByName.ToList();
+                }
+
             }
+
             var model = new ProductsVm()
             {
                 CategoryId = category.Id,
                 CategoryName = category.Name,
-               
+
             };
-            if(userName != null)
+            if (userName != null)
             {
                 AccountUser accountUser = await userManager.FindByNameAsync(userName);
 
@@ -82,26 +87,43 @@ namespace WebStore.Controllers.Products
 
                 //CategoryId = pr.CategoryId,
                 //CategoryName = category.Name,
-            }).ToList() ;
+            }).ToList();
             return View(model);
         }
-        
-        public ActionResult ProductList(Guid categoryId, string name = null, string priceGoods = null)
+
+        public ActionResult ProductListForAdmin(Guid categoryId, string namePrice = null)
         {
 
             var userName = HttpContext.User.Identity.Name;
-          
+
             var category = this.dbContext.Categories.FirstOrDefault(cat => cat.Id == categoryId);
             var model = new ProductsViewModel()
             {
                 Products = new List<ProductVm>(),
-                //CategoryId = category.Id
+                CategoryId = category.Id,
                 CategoryName = category.Name
             };
 
 
-            var products = this.dbContext.Products.Where(pr => pr.CategoryId == category.Id);
-           var productList = products.OrderByDescending(p => p.Number).ToList();
+
+            var products = this.dbContext.Products.Where(pr => pr.CategoryId == category.Id).ToList();
+            if (!string.IsNullOrEmpty(namePrice))
+            {
+                var isPrice = decimal.TryParse(namePrice, out decimal price);
+                if (isPrice)
+                {
+                    var foundProdByPrice = products.Where(p => p.PriceGoods == price);
+
+                    products = foundProdByPrice.ToList();
+                }
+
+                var foundProdsByName = products.Where(p => p.Name.Contains(namePrice));
+                if (foundProdsByName.Any())
+                {
+                    products = foundProdsByName.ToList();
+                }
+            }
+            var productList = products.OrderByDescending(p => p.Number).ToList();
             model.Products = productList.Select(pr => new ProductVm()
             {
                 Id = pr.Id,
@@ -119,14 +141,14 @@ namespace WebStore.Controllers.Products
 
         public ActionResult About(Guid id)
         {
-          
+
             var product = this.dbContext.Products
                 .Include(pr => pr.Category)
                 .FirstOrDefault(pr => pr.Id == id);
 
             var model = new AboutProductVm()
             {
-                Id= product.Id,
+                Id = product.Id,
                 CategoryName = product.Category.Name,
                 Name = product.Name,
                 Number = product.Number,
@@ -150,39 +172,39 @@ namespace WebStore.Controllers.Products
 
                 }).ToList()
             };
-             return View(model);
+            return View(model);
         }
-       
+
 
         [HttpPost]
         public async Task<IActionResult> CreateSubmit(CreateProductSubmitVm model, IFormFile Image)
         {
             var category = this.dbContext.Categories.FirstOrDefault(cat => cat.Id == model.CategoryId);
-           
-            var scatId = Guid.Parse("959e0d03-044d-4ca2-a210-f2bba7680896");
+
+            var scatId = Guid.Parse("3C4C483C-30E9-4F11-BEA3-B5FBC288C7AE");
             var symcaId = Guid.Parse("030be0f0-6d44-43a0-b278-df478caffbad");
-            var shampId = Guid.Parse("23a2a828-3ba6-4403-a068-92168f0b02cb");
-            var shampMyloId = Guid.Parse("4f1cadba-f733-4fe8-8aba-419131531fd6");
+          //  var shampId = Guid.Parse("23a2a828-3ba6-4403-a068-92168f0b02cb");
+            var shampMyloId = Guid.Parse("0E74B97F-B482-4919-B8CC-7713A4283104");
             var number = this.dbContext.Products.Where(p => p.CategoryId == category.Id).Count();
             if (category.Id == scatId)
-            {            
+            {
                 number = number + 500;
             }
-            else if (category.Id == shampId)
-            {
-                number = number + 1000;
-            } 
+            //else if (category.Id == shampId)
+            //{
+            //    number = number + 1000;
+            //}
             else if (category.Id == shampMyloId)
             {
                 number = number + 10000;
             }
-           
+
             var newProduct = new Product()
             {
                 Id = Guid.NewGuid(),
                 Name = model.Name,
                 PriceGoods = model.PriceGoods,
-                Number = number+1,
+                Number = number + 1,
                 CategoryId = category.Id,
                 Discription = model.Discription,
                 DiscriptionFull = model.DiscriptionFull,
@@ -204,7 +226,7 @@ namespace WebStore.Controllers.Products
             this.dbContext.Products.Add(newProduct);
             this.dbContext.SaveChanges();
 
-            return RedirectToAction(nameof(ProductList), new { categoryId = newProduct.CategoryId});
+            return RedirectToAction(nameof(ProductListForAdmin), new { categoryId = newProduct.CategoryId });
         }
 
         public IActionResult Edit(Guid? id)
@@ -214,7 +236,7 @@ namespace WebStore.Controllers.Products
                 return NotFound();
             }
             var categories = this.dbContext.Categories.ToList();
-            var product =  this.dbContext.Products.FirstOrDefault(m => m.Id == id);
+            var product = this.dbContext.Products.FirstOrDefault(m => m.Id == id);
             if (product == null)
             {
                 return NotFound();
@@ -252,7 +274,7 @@ namespace WebStore.Controllers.Products
                 return NotFound();
             }
 
-          //  if (ModelState.IsValid)
+            //  if (ModelState.IsValid)
             {
 
                 if (Image != null)
@@ -268,21 +290,21 @@ namespace WebStore.Controllers.Products
                 }
             }
             upProduct.Name = model.Name;
-            if(model.CategoryId != Guid.Empty)
+            if (model.CategoryId != Guid.Empty)
             {
                 upProduct.CategoryId = model.CategoryId;
             }
-            
+
             upProduct.Discription = model.Discription;
             upProduct.DiscriptionFull = model.DiscriptionFull;
             upProduct.PriceGoods = model.PriceGoods;
-           
+
 
             this.dbContext.Products.Update(upProduct);
             this.dbContext.SaveChanges();
 
 
-            return RedirectToAction(nameof(ProductList), new { categoryId = upProduct.CategoryId });
+            return RedirectToAction(nameof(ProductListForAdmin), new { categoryId = upProduct.CategoryId });
         }
 
         [HttpPost]
@@ -293,11 +315,11 @@ namespace WebStore.Controllers.Products
             if (prod != null)
             {
                 var result = this.dbContext.Products.Remove(prod);
-               
+
                 this.dbContext.SaveChanges();
 
             }
-            return RedirectToAction(nameof(ProductList), new { categoryId = catId });
+            return RedirectToAction(nameof(ProductListForAdmin), new { categoryId = catId });
         }
     }
 }

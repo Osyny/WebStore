@@ -6,14 +6,15 @@
 </div>
 <hr />
 
-<form asp-action="Index" asp-controller="Product">
+<form asp-action="ProductListForAdmin" asp-controller="Product">
     &nbsp;&nbsp;
     <input type="hidden" name="categoryId" value="@Model.CategoryId" />
-    <input type="text" name="priceGoods" placeholder=" Пошук по ціні" />
-    <input type="text" name="name" placeholder=" Пошук по назві  " />
+    <input type="text" name="namePrice" placeholder=" Пошук по ціні, назві" />
+    @*<input type="text" name="wordSearch" placeholder=" Пошук по назві  " />*@
     <button type="submit"> Пошук </button>
     &nbsp; &nbsp;&nbsp;
-    <span id="newcat"> <a asp-action="Create">Добавити нову</a></span>
+    &nbsp; &nbsp;&nbsp;
+    <span id="newcat"> <a asp-action="Create">Добавити</a></span>
 </form>
 
 <hr />

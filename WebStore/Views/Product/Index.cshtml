@@ -38,9 +38,12 @@
 <hr />
 
 <form asp-action="Index" asp-controller="Product">
+    &nbsp;&nbsp;
     <input type="hidden" name="categoryId" value="@Model.CategoryId" />
-    <input type="text" name="priceGoods" placeholder=" Пошук по ціні" />
-    <input type="text" name="name" placeholder=" Пошук по назві  " />
+    <input type="text" name="namePrice" placeholder=" Пошук по ціні, назві" />
+  
+    &nbsp; &nbsp;&nbsp;
+    &nbsp; &nbsp;&nbsp;
     <button type="submit"> Пошук </button>
 </form>
 

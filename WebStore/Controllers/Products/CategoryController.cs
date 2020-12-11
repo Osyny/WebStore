@@ -126,6 +126,8 @@ namespace WebStore.Controllers.Products
             if (category != null)
             {
                 var result = this.dbContext.Categories.Remove(category);
+                this.dbContext.SaveChanges();
+
             }
             return RedirectToAction("Index");
         }

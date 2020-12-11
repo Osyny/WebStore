@@ -332,10 +332,7 @@ namespace WebStore.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AccountUserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("AccountUserId1")
+                    b.Property<string>("AccountUserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("DateRegister")
@@ -343,7 +340,7 @@ namespace WebStore.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AccountUserId1");
+                    b.HasIndex("AccountUserId");
 
                     b.ToTable("Userss");
                 });
@@ -440,7 +437,7 @@ namespace WebStore.Migrations
                 {
                     b.HasOne("WebStore.Models.DbModel.AccountUser", "AccountUser")
                         .WithMany()
-                        .HasForeignKey("AccountUserId1");
+                        .HasForeignKey("AccountUserId");
                 });
 #pragma warning restore 612, 618
         }
