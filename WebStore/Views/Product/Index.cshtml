@@ -34,6 +34,48 @@
 
 </div>
 
+<script>
+    const form = document.getElementById('buyForm');
+    form.addEventListener('submit', overrideSubmit);
+
+    function overrideSubmit(evt) {
+        // 2
+        var formData = new FormData(evt.target);
+        var request = new XMLHttpRequest();
+
+        // 3
+        request.open("POST", "здесь url");
+        request.send(formData);
+
+        // 4
+        request.onreadystatechange = reqReadyStateChange;
+
+        function reqReadyStateChange() {
+            var status = request.status;
+            if (status !== 200) {
+                // ошибка
+                iziToast.error({
+                    title: 'Error',
+                    message: request.responseText,
+                    position: 'topRight',
+                });
+                return;
+            }
+
+            console.log(request);
+
+            // 5
+            iziToast.success({
+                title: 'OK',
+                message: request.responseText,
+                position: 'topRight', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter, center
+            });
+        }
+    }
+
+
+</script>
+
 
 <hr />
 
@@ -41,7 +83,7 @@
     &nbsp;&nbsp;
     <input type="hidden" name="categoryId" value="@Model.CategoryId" />
     <input type="text" name="namePrice" placeholder=" Пошук по ціні, назві" />
-  
+
     &nbsp; &nbsp;&nbsp;
     &nbsp; &nbsp;&nbsp;
     <button type="submit"> Пошук </button>
@@ -53,25 +95,27 @@
 <div id="container">
     @foreach (var pr in Model.Products)
     {
-    <div class="card" id="cardBord">
-        <a href="@Url.Action("About", "Product", new { Id = pr.Id })">
-            <img src="@pr.Image" alt="Avatar" style="max-width: 100%; height: auto;">
-            <h5><b>@pr.Name</b></h5>
-        </a>
-        <div class="conteiner">
-            <h4><b>@pr.PriceGoods &nbsp;грн</b></h4>
-            <hr />
-            <p>@pr.Discription</p>
-        </div>
-        <form asp-controller="Basket" asp-action="Buy" asp-route-userId="@Model.UserId" method="post">
-            <input type="hidden" name="productId" value="@pr.Id" />
-            <input type="hidden" name="userId" value="@Model.UserId" />
-            <p><button id="button">Купити</button></p>
-        </form>
+        <div class="card" id="cardBord">
+            <a href="@Url.Action("About", "Product", new { Id = pr.Id })">
+                <img src="@pr.Image" alt="Avatar" style="max-width: 100%; height: auto;">
+                <h5><b>@pr.Name</b></h5>
+            </a>
+            <div class="conteiner">
+                <h4><b>@pr.PriceGoods &nbsp;грн</b></h4>
+                <hr />
+                <p>@pr.Discription</p>
+            </div>
+            <form asp-controller="Basket" asp-action="Buy" asp-route-userId="@Model.UserId" method="post">
+                <input type="hidden" name="productId" value="@pr.Id" />
+                <input type="hidden" name="userId" value="@Model.UserId" />
+                <p><button id="button">Купити</button></p>
+            </form>
 
-    </div>
+        </div>
     }
 </div>
+
+
 
 
 
@@ -137,7 +181,7 @@
     }
 
 
-        button:hover, a:hover {
-            opacity: 0.7;
-        }
+    button:hover, a:hover {
+        opacity: 0.7;
+    }
 </style>
