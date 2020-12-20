@@ -37,7 +37,7 @@ namespace WebStore.Controllers.Products
         }
 
 
-        public async Task<ActionResult> IndexAsync(Guid categoryId, Guid userId, string namePrice = null)
+        public async Task<ActionResult> IndexAsync(Guid categoryId, /*Guid userId,*/ string namePrice = null)
         {
 
             var category = this.dbContext.Categories.FirstOrDefault(cat => cat.Id == categoryId);

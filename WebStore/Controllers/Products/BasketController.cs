@@ -45,10 +45,11 @@ namespace WebStore.Controllers.Products
             }
             this.dbContext.Basckets.Add(newBascet);
             this.dbContext.SaveChanges();
-          
 
 
-            return Content("Додано в корзину!!!"); ;
+
+             return Content("Додано в корзину!!!"); ;
+           // return ;
         }
         [HttpPost]
         public IActionResult Delete(Guid id)
