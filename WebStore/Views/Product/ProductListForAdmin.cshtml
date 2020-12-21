@@ -1,7 +1,60 @@
 ﻿@model WebStore.Models.ViewModel.Products.ProductsViewModel
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"
+        integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA==" crossorigin="anonymous">
+
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.css"
+      integrity="sha512-DIW4FkYTOxjCqRt7oS9BFO+nVOwDL4bzukDyDtMO7crjUZhwpyrWBFroq+IqRe6VnJkTpRAS6nhDvf0w+wHmxg==" crossorigin="anonymous" />
+<script>
+    // 1
+    function overrideSubmit(evt, onSuccess) {
+        const submitUrl = evt.target.action;
+
+
+        var formData = new FormData(evt.target);
+        var request = new XMLHttpRequest();
+
+
+        // ??? ToDo -> що це за submitUrl
+        request.open("POST", submitUrl);
+        request.send(formData);
+
+        // 4
+        // заменён на правильный обработчик onload https://learn.javascript.ru/xmlhttprequest
+        request.onload = function () {
+            console.log(request);
+            const status = request.status;
+            const text = request.response;
+
+            if (status !== 200) {
+                iziToast.error({
+                    title: 'Error',
+                    message: text,
+                    position: 'topRight',
+                });
+                return;
+            }
+
+
+
+            // 5
+            iziToast.success({
+                title: 'OK',
+                message: text,
+                position: 'topRight',
+            });
+
+            if (onSuccess) {
+                onSuccess(request);
+            }
+        };
+    }
+
+</script>
+
 <div id="container">
-      <h4 style="color:brown;text-align:center;"> <b>&nbsp; &nbsp; @Model.CategoryName </b></h4>
+    <h4 style="color:brown;text-align:center;"> <b>&nbsp; &nbsp; @Model.CategoryName </b></h4>
 
 </div>
 <hr />
@@ -38,8 +91,7 @@
                 @foreach (var prod in Model.Products)
                 {
 
-
-                    <tr>
+                    <tr data-productrowid="@prod.Id">
                         <td>@prod.Number</td>
                         <td><img id="Img_logo" src="@prod.Image"></td>
                         <td><b> @prod.Name </b></td>
@@ -53,7 +105,9 @@
                             </form>
                         </td>
                         <td>
-                            <form asp-action="Delete" asp-route-id="@prod.Id" method="post">
+                            @*// 2*@
+                            @*//3*@
+                            <form data-formid="@prod.Id" asp-action="Delete" asp-route-id="@prod.Id" method="post">
                                 <button type="submit" class="btn btn-sm btn-danger">
                                     Видалити
                                 </button>
@@ -67,6 +121,28 @@
         </table>
     </div>
 }
+
+<script>
+    function removeElementByAttributeValue(attrName, attrValue) {
+        // должен получиться селектор в виде [data-productrowid="1"]
+        const selector = `[data-${attrName}="${attrValue}"]`;
+        const elementToRemove = document.querySelector(selector);
+        elementToRemove.remove();
+    }
+
+    document.body.addEventListener("submit", function (evt) {
+        const formId = evt.target.dataset['formid'];
+        if (!formId) {
+            return;
+        }
+
+        evt.preventDefault();
+        evt.stopPropagation();
+        overrideSubmit(evt, function (req) {
+            removeElementByAttributeValue("productrowid", formId);
+        });
+    });
+</script>
 
 <style>
     #Img_logo {
@@ -90,3 +166,17 @@
         padding: 25px;
     }
 </style>
+
+
+
+
+@*
+        Обновить всю страницу можно через location.reload(), но обычно обновляют только часть (таблицу или ряд таблицы).
+
+    У нас есть функция overrideSubmit. Для удаления ряда таблицы:
+    1. добавляем в overrideSubmit второй параметр - функцию onSuccess. Вызываем его в случае упеха, на ProductListForAdmin:49
+    2. при выводе списка добавляем атрибут data-productrowid="@prod.Id" к ряду таблицы <tr>
+        , чтобы иметь уникальный "айдишник" ряда
+        3. объявляем функцию removeElementByAttributeValue, которая принимает название атрибута, его значение, и удаляет элемент из документа
+        4. вызываем overrideSubmit, передав вторым аргументом функцию, которая вызовет удаление ряда
+*@

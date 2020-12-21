@@ -319,7 +319,9 @@ namespace WebStore.Controllers.Products
                 this.dbContext.SaveChanges();
 
             }
-            return RedirectToAction(nameof(ProductListForAdmin), new { categoryId = catId });
+           
+            return Content("Видалено");
+           
         }
     }
 }
