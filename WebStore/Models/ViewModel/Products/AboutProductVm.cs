@@ -15,7 +15,7 @@ namespace WebStore.Models.ViewModel.Products
         public string Image { get; set; }
 
         public decimal PriceGoods { get; set; }
-        public int Number { get; set; }
+        public string Number { get; set; }
 
       
         public string CategoryName { get; set; }

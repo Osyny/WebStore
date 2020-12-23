@@ -14,7 +14,7 @@ namespace WebStore.Models.DbModel
         public string Image { get; set; }
 
         public decimal PriceGoods { get; set; }
-        public int Number { get; set; }
+        public string Number { get; set; }
 
         public Category Category { get; set; }
         public Guid CategoryId { get; set; }

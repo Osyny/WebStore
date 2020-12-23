@@ -204,7 +204,7 @@ namespace WebStore.Controllers.Products
                 Id = Guid.NewGuid(),
                 Name = model.Name,
                 PriceGoods = model.PriceGoods,
-                Number = number + 1,
+                Number = (number + 1).ToString(), // this.GenerateNumber(), // number + 1,// 
                 CategoryId = category.Id,
                 Discription = model.Discription,
                 DiscriptionFull = model.DiscriptionFull,
@@ -310,7 +310,7 @@ namespace WebStore.Controllers.Products
         [HttpPost]
         public IActionResult Delete(Guid id)
         {
-            var prod = this.dbContext.Products.FirstOrDefault(cat => cat.Id == id);
+            var prod = this.dbContext.Products.FirstOrDefault(p => p.Id == id);
             var catId = prod.CategoryId;
             if (prod != null)
             {
@@ -323,5 +323,13 @@ namespace WebStore.Controllers.Products
             return Content("Видалено");
            
         }
+
+        private string GenerateNumber()
+        {
+            int number = dbContext.GetNextSequenceValue("ProductNumberSeq");
+            var res = String.Format("{0:0000}-{1:0000000}", DateTime.Now.Year, number);
+            return res;
+        }
+
     }
 }
