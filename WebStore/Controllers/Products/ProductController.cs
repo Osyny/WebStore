@@ -181,30 +181,30 @@ namespace WebStore.Controllers.Products
         {
             var category = this.dbContext.Categories.FirstOrDefault(cat => cat.Id == model.CategoryId);
 
-            var scatId = Guid.Parse("3C4C483C-30E9-4F11-BEA3-B5FBC288C7AE");
-            var symcaId = Guid.Parse("030be0f0-6d44-43a0-b278-df478caffbad");
-          //  var shampId = Guid.Parse("23a2a828-3ba6-4403-a068-92168f0b02cb");
-            var shampMyloId = Guid.Parse("0E74B97F-B482-4919-B8CC-7713A4283104");
-            var number = this.dbContext.Products.Where(p => p.CategoryId == category.Id).Count();
-            if (category.Id == scatId)
-            {
-                number = number + 500;
-            }
-            //else if (category.Id == shampId)
+            //var scatId = Guid.Parse("3C4C483C-30E9-4F11-BEA3-B5FBC288C7AE");
+            //var symcaId = Guid.Parse("030be0f0-6d44-43a0-b278-df478caffbad");
+            ////  var shampId = Guid.Parse("23a2a828-3ba6-4403-a068-92168f0b02cb");
+            //var shampMyloId = Guid.Parse("0E74B97F-B482-4919-B8CC-7713A4283104");
+            //var number = this.dbContext.Products.Where(p => p.CategoryId == category.Id).Count();
+            //if (category.Id == scatId)
             //{
-            //    number = number + 1000;
+            //    number = number + 500;
             //}
-            else if (category.Id == shampMyloId)
-            {
-                number = number + 10000;
-            }
+            ////else if (category.Id == shampId)
+            ////{
+            ////    number = number + 1000;
+            ////}
+            //else if (category.Id == shampMyloId)
+            //{
+            //    number = number + 10000;
+            //}
 
             var newProduct = new Product()
             {
                 Id = Guid.NewGuid(),
                 Name = model.Name,
                 PriceGoods = model.PriceGoods,
-                Number = (number + 1).ToString(), // this.GenerateNumber(), // number + 1,// 
+                Number = this.GenerateNumber(), // number + 1,//  (number + 1).ToString(), // 
                 CategoryId = category.Id,
                 Discription = model.Discription,
                 DiscriptionFull = model.DiscriptionFull,
@@ -319,11 +319,16 @@ namespace WebStore.Controllers.Products
                 this.dbContext.SaveChanges();
 
             }
-           
+
             return Content("Видалено");
-           
+
         }
 
+        //private string GenerateNumber()
+        //{
+        //    int number = dbContext.GetNextSequenceValue("ProductNumberSeq");
+        //    var res = String.Format("{0:0000}-{1:0000000}", DateTime.Now.Year, number);
+        //    return res;
         private string GenerateNumber()
         {
             int number = dbContext.GetNextSequenceValue("ProductNumberSeq");

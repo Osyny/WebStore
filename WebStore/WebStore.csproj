@@ -7,6 +7,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20201211134932_Empty.cs" />
     <Compile Remove="Migrations\20201211134932_Empty.Designer.cs" />
+    <Compile Remove="Migrations\20210112135057_AddProductNumberSeq.cs" />
+    <Compile Remove="Migrations\20210112135057_AddProductNumberSeq.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

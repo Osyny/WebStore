@@ -23,7 +23,19 @@ namespace WebStore.Models
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
 
+
+
+            // ------------------------------------------------------
+            // https://www.talkingdotnet.com/use-sql-server-sequence-in-entity-framework-core-primary-key/
             builder.HasSequence<long>("ProductNumberSeq");
+
+            
+            //builder.HasSequence<long>("DBSequence")
+            //                 .StartsAt(1000).IncrementsBy(2);
+
+            //builder.Entity<Product>()
+            //   .Property(x => x.Number)
+            //   .HasDefaultValueSql("NEXT VALUE FOR DBSequence");
         }
 
         public DbSet<User> Userss { get; set; }
@@ -33,13 +45,16 @@ namespace WebStore.Models
         public DbSet<Bascket> Basckets { get; set; }
 
 
-    
+
 
         public int GetNextSequenceValue(string seqName)
         {
-            var next = this.GetByRawSql($"SELECT nextval('public.\"{seqName}\"');");
+            //// var next = this.GetByRawSql($"SELECT nextval('public.\"{seqName}\"');");
+             var next = this.GetByRawSql($"SELECT NEXT VALUE FOR {seqName}");
+
             return next;
         }
+
 
         private int GetByRawSql(string sql, params KeyValuePair<string, object>[] parameters)
         {
@@ -65,7 +80,7 @@ namespace WebStore.Models
                 using (DbDataReader dataReader = command.ExecuteReader())
                     if (dataReader.HasRows)
                         while (dataReader.Read())
-                            result = dataReader.GetInt32(0);
+                            result =(int)dataReader.GetInt64(0);
             }
           
             connection.Close();
