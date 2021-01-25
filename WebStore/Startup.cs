@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using WebStore.Models;
 using WebStore.Models.DbModel;
 using WebStore.Service;
+using WebStore.Service.LayoutData;
 
 namespace WebStore
 {
@@ -35,8 +36,9 @@ namespace WebStore
 
             services.AddControllersWithViews();
 
+            // For _Layout
             services.AddHttpContextAccessor();
-            services.AddScoped<ILayoutDataService, LayoutDataService>();
+            services.AddTransient<ILayoutDataService, LayoutDataService>();
         }
 
         public void Configure(IApplicationBuilder app)

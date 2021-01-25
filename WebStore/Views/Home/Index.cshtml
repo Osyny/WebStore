@@ -2,7 +2,7 @@
 
 
 
-@if (Model != null && Model.RoleName == "Admin")
+@*@if (Model != null && Model.RoleName == "Admin")
 {
     <div class="topMenu">
        
@@ -15,12 +15,12 @@
 
     </div>
 
-}
-<div >
+}*@
+@*<div >
     <a id="conteiner" asp-action="Index" asp-controller="Basket" asp-route-userId="@Model.User?.Id">
         <img style="width: 5%;" src="~/images/basket.PNG" />(@Model.CountProducts)
     </a>
-</div>
+</div>*@
 
 
 

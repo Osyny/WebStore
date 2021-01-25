@@ -1,12 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Identity;
+@using WebStore.Service.LayoutData;
+@inject ILayoutDataService layoutDataService;
 
 @inject SignInManager<WebStore.Models.DbModel.AccountUser> SignInManager
 @inject UserManager<WebStore.Models.DbModel.AccountUser> UserManager
-
-
-@inject List<WebStore.Models.DbModel.User> users;
-@*@inject List<WebStore.Models.DbModel.Bascket> basckets;*@
-
 
 
 
@@ -75,29 +72,19 @@
 
                     </ul>
                     @await Html.PartialAsync("_LoginPartial")
+                    @{ 
+                        var userId = await layoutDataService.UserIdAsync();
+                       var res = layoutDataService.GetProductCountAsync().Result;
 
-                    @*{
+                        var count = res;
 
-
-
-                            var accountUser = await UserManager.FindByNameAsync(userName);
-                            WebStore.Models.DbModel.User curentUser = null;
-                            List<WebStore.Models.DbModel.Bascket> userBasckets = null;
-                            if (accountUser != null)
-                            {
-                                curentUser = users
-                                            .FirstOrDefault(u => u.AccountUser.Id == accountUser.Id);
-
-                                userBasckets = basckets.Where(b => b.UserId == curentUser.Id).ToList();
-                            }
-
-
-                        }*@
-                    @*<div id="conteiner">
-                            <a asp-action="Index" asp-controller="Basket" asp-route-userId="@curentUser?.Id">
-                                <img style="width: 5%;" src="~/images/basket.PNG" />(@userBasckets.Count())
+                    }
+                  
+                    <div id="conteiner">
+                            <a asp-action="Index" asp-controller="Basket" asp-route-userId="@userId">
+                                <img style="width: 15%; margin-left:20px;" src="~/images/basket.PNG" />(@count)
                             </a>
-                        </div>*@
+                        </div>
 
                 </div>
 
