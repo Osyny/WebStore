@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebStore.Models;
 using WebStore.Models.DbModel;
+using WebStore.Service;
 
 namespace WebStore
 {
@@ -33,6 +34,9 @@ namespace WebStore
                 .AddEntityFrameworkStores<ApplicationContext>();
 
             services.AddControllersWithViews();
+
+            services.AddHttpContextAccessor();
+            services.AddScoped<ILayoutDataService, LayoutDataService>();
         }
 
         public void Configure(IApplicationBuilder app)

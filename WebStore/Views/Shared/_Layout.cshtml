@@ -3,8 +3,10 @@
 @inject SignInManager<WebStore.Models.DbModel.AccountUser> SignInManager
 @inject UserManager<WebStore.Models.DbModel.AccountUser> UserManager
 
-@*@inject List<WebStore.Models.DbModel.User> users;
-@inject List<WebStore.Models.DbModel.Bascket> basckets;*@
+
+@inject List<WebStore.Models.DbModel.User> users;
+@*@inject List<WebStore.Models.DbModel.Bascket> basckets;*@
+
 
 
 
@@ -26,9 +28,9 @@
                     <img Id="imgLogo1" src="~/images/homeLogo.jpg" />
                 </a>
                 @*<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>*@
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>*@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         @{
@@ -65,33 +67,37 @@
 
 
                         <li>@Html.ActionLink("Контакти", "Contact", "Home")</li>
-                    
-                        <li><a style=" margin-right: 20px;" asp-action="Index" asp-controller="Roles">Users </a> </li>
+
+                        @*<li><a style=" margin-right: 20px;" asp-action="Index" asp-controller="Roles">Users </a> </li>*@
 
 
 
 
                     </ul>
                     @await Html.PartialAsync("_LoginPartial")
-                    @*@{
-                        var accountUser = await UserManager.FindByNameAsync(userName);
-                        WebStore.Models.DbModel.User curentUser = null;
-                        List<WebStore.Models.DbModel.Bascket> userBasckets = null;
-                        if (accountUser != null)
-                        {
-                            curentUser = users
-                                        .FirstOrDefault(u => u.AccountUserId == Guid.Parse(accountUser.Id));
 
-                            userBasckets = basckets.Where(b => b.UserId == curentUser.Id).ToList();
-                        }
+                    @*{
 
 
-                    }
-                    <div id="conteiner">
-                        <a asp-action="Index" asp-controller="Basket" asp-route-userId="@curentUser?.Id">
-                            <img style="width: 5%;" src="~/images/basket.PNG" />(@userBasckets.Count())
-                        </a>
-                    </div>*@
+
+                            var accountUser = await UserManager.FindByNameAsync(userName);
+                            WebStore.Models.DbModel.User curentUser = null;
+                            List<WebStore.Models.DbModel.Bascket> userBasckets = null;
+                            if (accountUser != null)
+                            {
+                                curentUser = users
+                                            .FirstOrDefault(u => u.AccountUser.Id == accountUser.Id);
+
+                                userBasckets = basckets.Where(b => b.UserId == curentUser.Id).ToList();
+                            }
+
+
+                        }*@
+                    @*<div id="conteiner">
+                            <a asp-action="Index" asp-controller="Basket" asp-route-userId="@curentUser?.Id">
+                                <img style="width: 5%;" src="~/images/basket.PNG" />(@userBasckets.Count())
+                            </a>
+                        </div>*@
 
                 </div>
 
@@ -131,4 +137,16 @@
         padding: 25px;
     }*/
 </style>
+
+
+@*привет. Ошибка "No service for type has been registered" указывает, что в Startup.ConfigureServices() не добавлена зависимость. Делать inject обычного списка не очень логично, я бы добавил класс который будет выгружать информацию для Layout.
+
+    1. Создаем класс LayoutDataService. Для примера сделал с интерфейсом, можно обойтись без него.
+    2. Добавляем в конструктор необходимые для выгрузки зависимости.
+    Для доступа к пользователю можно использовать HttpContext (такой же как в контроллере). В asp net для этого есть специальный IHttpContextAccessor.
+    3. Регистрируем в Startup.ConfigureServices() наш класс
+    4. Регистрируем в Startup.ConfigureServices() IHttpContextAccessor, как указано в оф. документации https://docs.microsoft.com/en-us/aspnet/core/fundamentals/http-context?view=aspnetcore-5.0
+    5. В LayoutDataService можно в дальнейшем добавить, например, контекст базы. Всё как обычно - зависимость добавить к конструктор и зарегистрировать в Startup.
+       IHttpContextAccessor -  https://docs.microsoft.com/en-us/aspnet/core/fundamentals/http-context?view=aspnetcore-5.0
+*@
 
