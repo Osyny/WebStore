@@ -82,6 +82,12 @@
                 message: text,
                 position: 'topRight',
             });
+
+            // count Product
+            function getElementByAttributeValue(attrName, attrValue) {
+                const selector = `[data-${attrName}="${attrValue}"]`;
+                return document.querySelector(selector);
+            }
         };
     }
 

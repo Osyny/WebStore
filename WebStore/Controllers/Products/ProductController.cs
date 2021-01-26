@@ -76,6 +76,8 @@ namespace WebStore.Controllers.Products
                 var user = dbContext.Userss.FirstOrDefault(u => u.AccountUser == accountUser);
                 model.UserId = user.Id;
             }
+
+
             model.Products = products.Select(pr => new ProductVm()
             {
                 Id = pr.Id,
