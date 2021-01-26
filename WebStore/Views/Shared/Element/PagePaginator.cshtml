@@ -1,0 +1,229 @@
+﻿@using WebStore.Models.ViewModel.Pagination
+@model WebStore.Models.ViewModel.Pagination.PaginationViewModel
+
+
+@{
+    var prevPageNumber = Model.CurrentPage - 1;
+    var prevMorePageNumber = Model.CurrentPage - Model.DisplayOnPage;
+
+    var nextPageNumber = Model.CurrentPage + 1;
+    var nextMorePageNumber = Model.CurrentPage + Model.DisplayOnPage;
+
+}
+
+@functions
+{
+
+    public string makeItem(string content, string classNameStr, string href)
+    {
+        return $"<div class='{classNameStr}'> <a href='{href}'>{content}</a> </div>";
+    }
+
+    public string makeLinkByPageNumber(int pageNumber)
+    {
+        var parameter = new Dictionary<string, string>() { };
+
+        foreach (var keyValuePair in Model.ObjectParameter)
+        {
+            parameter.Add(keyValuePair.Key, keyValuePair.Value);
+        }
+        parameter.Add("currentPage", pageNumber.ToString());
+
+        return Url.Action(Model.ActionName, Model.ControllerName, parameter);
+
+        //return Url.Action(Model.ActionName, Model.ControllerName, Model.ObjectParameter);
+    }
+
+}
+<div class="paginationWrapper">
+
+    <div class="prevButtons">
+
+
+        @if (Model.TotalCount != 0 && Model.TotalCount != 1)
+        {
+            @Html.Raw(makeItem("◄◄", "paginationItem prevMore", makeLinkByPageNumber(prevMorePageNumber)))
+
+            @Html.Raw(makeItem("◄", "paginationItem prev", makeLinkByPageNumber(prevPageNumber)))
+        }
+
+    </div>
+
+
+    <nav class="pagination">
+
+
+        @if (Model.CurrentPage - 2 >= 0)
+        {
+            @Html.Raw(makeItem((Model.CurrentPage - 2).ToString(), "paginationItem", makeLinkByPageNumber(Model.CurrentPage - 2)))
+        }
+        @if (Model.CurrentPage - 1 > 0)
+        {
+            @Html.Raw(makeItem((Model.CurrentPage - 1).ToString(), "paginationItem", makeLinkByPageNumber(Model.CurrentPage - 1)))
+        }
+
+
+        @Html.Raw(makeItem((Model.CurrentPage).ToString(), "paginationItem active", makeLinkByPageNumber(Model.CurrentPage)))
+
+
+
+        @if (Model.CurrentPage + 1 <= Model.TotalCount)
+        {
+            @Html.Raw(makeItem((Model.CurrentPage + 1).ToString(), "paginationItem", makeLinkByPageNumber(Model.CurrentPage + 1)))
+        }
+
+
+        @if (Model.CurrentPage + 2 <= Model.TotalCount)
+        {
+            @Html.Raw(makeItem((Model.CurrentPage + 2).ToString(), "paginationItem", makeLinkByPageNumber(Model.CurrentPage + 2)))
+        }
+
+
+        @if (Model.CurrentPage + 2 < Model.TotalCount)
+        {
+            @Html.Raw(makeItem("...", "paginationItem hiddenPagesPlacholder disabled", makeLinkByPageNumber(Model.CurrentPage)))
+
+            @*@Html.Raw(makeItem((Model.TotalCount / Model.DisplayOnPage).ToString(), "paginationItem", makeLinkByPageNumber(Model.TotalCount)))*@
+            @Html.Raw(makeItem((Model.TotalCount).ToString(), "paginationItem", makeLinkByPageNumber(Model.TotalCount)))
+        }
+
+
+    </nav>
+
+
+    <div class="nextButtons">
+
+
+        @if (Model.TotalCount != 0 && Model.TotalCount != 1)
+        {
+            @Html.Raw(makeItem("►", "paginationItem next", makeLinkByPageNumber(nextPageNumber)))
+
+            @Html.Raw(makeItem("►►", "paginationItem nextMore", makeLinkByPageNumber(nextMorePageNumber)))
+        }
+
+
+
+    </div>
+
+
+
+</div>
+
+<style>
+    .paginationWrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-top: 85px;
+        padding-bottom: 85px;
+    }
+
+    .prevButtons {
+        display: flex;
+        align-items: center;
+    }
+
+    .nextButtons {
+        display: flex;
+        align-items: center;
+    }
+
+    .prev {
+        padding-right: 2px;
+    }
+
+    .prevMore {
+        padding-right: 3px;
+    }
+
+    .pagination {
+        display: flex;
+        align-items: center;
+    }
+
+    .paginationItem {
+        margin-left: 15px;
+        margin-right: 15px;
+        &:hover
+
+    {
+        a
+
+    {
+        text-decoration: underline;
+    }
+
+    }
+    }
+    margin-left: 70px; margin-right: 70px;
+    }
+
+    .paginationItem {
+        border-radius: 50%;
+        width: 55px;
+        height: 55px;
+        // margin-left: 15px;
+        // margin-right: 15px;
+        // font-size: 26px;
+        vertical-align: middle;
+        text-align: center;
+        line-height: 55px;
+        &.disabled
+
+    {
+        a
+
+    {
+        pointer-events: none;
+        color: rgba(0,0,0, .2);
+    }
+
+    }
+
+    a {
+        display: block;
+        height: 100%;
+        color: $headings_color;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    &:not(.active):hover {
+        background-color: $mainPage_color_circle_shadow;
+    }
+
+    }
+
+    .active {
+        background-color: $primary_color;
+        a
+
+    {
+        color: #fff;
+    }
+
+    }
+
+    .hiddenPagesPlacholder {
+    }
+
+    .hiddenNumbers {
+    }
+
+    .next {
+        padding-left: 2px;
+    }
+
+    .nextMore {
+        padding-left: 3px;
+    }
+
+    }
+
+
+    ._1________2___________3___________4________5____ {
+        // font-family: "Proxima Nova";
+        // color: rgb(73, 73, 73);
+        // line-height: 1.154;
+</style>
+

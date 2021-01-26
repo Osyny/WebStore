@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using WebStore.Models;
 using WebStore.Models.DbModel;
 using WebStore.Models.ViewModel.Home;
+using WebStore.Models.ViewModel.Pagination;
 using WebStore.Models.ViewModel.Products;
 
 namespace WebStore.Controllers.Products
@@ -37,14 +38,14 @@ namespace WebStore.Controllers.Products
         }
 
 
-        public async Task<ActionResult> IndexAsync(Guid categoryId, /*Guid userId,*/ string namePrice = null)
+        public async Task<ActionResult> IndexAsync(Guid categoryId, /*Guid userId,*/ string namePrice = null, int currentPage = 1)
         {
 
             var category = this.dbContext.Categories.FirstOrDefault(cat => cat.Id == categoryId);
             var userName = HttpContext.User.Identity.Name;
 
 
-            var products = this.dbContext.Products.Where(pr => pr.CategoryId == category.Id).ToList();
+            var products = this.dbContext.Products.Where(pr => pr.CategoryId == category.Id);
             if (!string.IsNullOrEmpty(namePrice))
             {
                 var isPrice = decimal.TryParse(namePrice, out decimal price);
@@ -52,16 +53,18 @@ namespace WebStore.Controllers.Products
                 {
                     var foundProdByPrice = products.Where(p => p.PriceGoods == price);
 
-                    products = foundProdByPrice.ToList();
+                    products = foundProdByPrice;
                 }
 
                 var foundProdsByName = products.Where(p => p.Name.Contains(namePrice));
                 if (foundProdsByName.Any())
                 {
-                    products = foundProdsByName.ToList();
+                    products = foundProdsByName;
                 }
 
             }
+            var count = products.Count();
+            int pageSize = 9;
 
             var model = new ProductsVm()
             {
@@ -78,6 +81,21 @@ namespace WebStore.Controllers.Products
             }
 
 
+            products = products.Skip(pageSize * currentPage - pageSize).Take(pageSize);
+            model.NamePriceFilter = namePrice;
+
+            model.Pagination = new PaginationViewModel()
+            {
+                TotalCount = count,
+                CurrentPage = currentPage,
+                ControllerName = "Product",
+                ActionName = "Index",
+                ObjectParameter = new Dictionary<string, string> {
+                    {
+                        "categoryId", category.Id.ToString()
+
+                    }}
+            };
             model.Products = products.Select(pr => new ProductVm()
             {
                 Id = pr.Id,
@@ -89,6 +107,8 @@ namespace WebStore.Controllers.Products
 
                 //CategoryId = pr.CategoryId,
                 //CategoryName = category.Name,
+
+              
             }).ToList();
             return View(model);
         }
@@ -126,6 +146,7 @@ namespace WebStore.Controllers.Products
                 }
             }
             var productList = products.OrderByDescending(p => p.Number).ToList();
+
             model.Products = productList.Select(pr => new ProductVm()
             {
                 Id = pr.Id,
@@ -135,6 +156,7 @@ namespace WebStore.Controllers.Products
                 Image = pr.Image,
 
                 Discription = pr.Discription,
+
 
             }).ToList();
 

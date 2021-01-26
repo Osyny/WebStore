@@ -111,6 +111,7 @@
 <form asp-action="Index" asp-controller="Product">
     &nbsp;&nbsp;
     <input type="hidden" name="categoryId" value="@Model.CategoryId" />
+    <input type="hidden" name="currentPage" value="@Model.NamePriceFilter" />
     <input type="text" name="namePrice" placeholder=" Пошук по ціні, назві" />
 
     &nbsp; &nbsp;&nbsp;
@@ -146,6 +147,7 @@
 
         </div>
     }
+    @Html.PartialAsync("~/Views/Shared/Element/PagePaginator.cshtml", Model.Pagination).Result;
 </div>
 
 @*//4*@
