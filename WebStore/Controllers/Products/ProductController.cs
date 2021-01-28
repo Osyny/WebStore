@@ -64,7 +64,7 @@ namespace WebStore.Controllers.Products
 
             }
             var count = products.Count();
-            int pageSize = 9;
+            int pageSize = 6;
 
             var model = new ProductsVm()
             {

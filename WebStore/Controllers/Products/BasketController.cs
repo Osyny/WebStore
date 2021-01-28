@@ -43,16 +43,21 @@ namespace WebStore.Controllers.Products
                 var user = dbContext.Userss.FirstOrDefault(user => user.Id == userId);
                 newBascet.UserId = user.Id;
 
+                this.dbContext.Basckets.Add(newBascet);
+                this.dbContext.SaveChanges();
+
                 var userBaskets = this.dbContext.Basckets
                 .Include(b => b.Product)
                 .Where(b => b.UserId == userId).ToList();
 
                 count = userBaskets.Count;
             }
-            this.dbContext.Basckets.Add(newBascet);
-            this.dbContext.SaveChanges();
-
-
+            else
+            {
+                //this.dbContext.Basckets.Add(newBascet);
+                //this.dbContext.SaveChanges();
+            }
+           
 
            return new JsonResult(new { Count = count, Message = "Додано успішно" });
           

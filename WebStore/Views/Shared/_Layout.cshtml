@@ -74,16 +74,18 @@
                     @await Html.PartialAsync("_LoginPartial")
                     @{ 
                         var userId = await layoutDataService.UserIdAsync();
-                       var res = layoutDataService.GetProductCountAsync().Result;
+                        var res = layoutDataService.GetProductCountAsync().Result;
 
                         var count = res;
+
+                        var resCount = count == 0 ? "" : $"({count})";
 
                     }
                   
                     <div id="conteiner">
-                            <a data-fieldname="headerproductscount" asp-action="Index" asp-controller="Basket" asp-route-userId="@userId">
-                                <img style="width: 15%; margin-left:20px;" src="~/images/basket.PNG" />(@count)
-                            </a>
+                        <a  asp-action="Index" asp-controller="Basket" asp-route-userId="@userId">
+                            <img style="width: 15%; margin-left:20px;" src="~/images/basket.PNG" /><span data-fieldname="headerproductscount"> @resCount</span>
+                        </a>
                         </div>
 
                 </div>

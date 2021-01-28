@@ -90,12 +90,13 @@
                 const selector = `[data-${attrName}="${attrValue}"]`;
 
                 return document.querySelector(selector);
+              //  alert("SELECTOR_ -> ", selector);
             }
             alert("SELECTOR -> ");
 
             var re = JSON.parse(this.responseText);
             const element = getElementByAttributeValue("fieldname", "headerproductscount");
-            element.innerHTML = re.Count;
+            element.innerHTML = re.count;
         };
     }
 
