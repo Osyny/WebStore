@@ -9,7 +9,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head style="color: cadetblue;">
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -17,18 +17,19 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body style="padding-top: 5rem">
-    <header id="header" >
+<body style="padding-top: 5.5rem;">
+    <header id="header">
         @*add navbar-fixed-top  - сделать верхнее меню прикрепленным *@
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 fixed-top">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light @*bg-white*@ border-bottom box-shadow mb-3 fixed-top"
+             style="background-color:#E0FAE9">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" title="HandMade_shop">
                     <img Id="imgLogo1" src="~/images/homeLogo.jpg" />
                 </a>
                 @*<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>*@
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>*@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         @{
@@ -93,7 +94,9 @@
 
             </div>
         </nav>
+
     </header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
