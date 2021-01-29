@@ -9,7 +9,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head style="color: cadetblue;">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -17,17 +17,18 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body>
-    <header id="header" style="background-color: cadetblue;">
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+<body style="padding-top: 5rem">
+    <header id="header" >
+        @*add navbar-fixed-top  - сделать верхнее меню прикрепленным *@
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 fixed-top">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" title="HandMade_shop">
                     <img Id="imgLogo1" src="~/images/homeLogo.jpg" />
                 </a>
                 @*<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>*@
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>*@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         @{
@@ -72,7 +73,7 @@
 
                     </ul>
                     @await Html.PartialAsync("_LoginPartial")
-                    @{ 
+                    @{
                         var userId = await layoutDataService.UserIdAsync();
                         var res = layoutDataService.GetProductCountAsync().Result;
 
@@ -81,12 +82,12 @@
                         var resCount = count == 0 ? "" : $"({count})";
 
                     }
-                  
+
                     <div id="conteiner">
-                        <a  asp-action="Index" asp-controller="Basket" asp-route-userId="@userId">
+                        <a asp-action="Index" asp-controller="Basket" asp-route-userId="@userId">
                             <img style="width: 15%; margin-left:20px;" src="~/images/basket.PNG" /><span data-fieldname="headerproductscount"> @resCount</span>
                         </a>
-                        </div>
+                    </div>
 
                 </div>
 
