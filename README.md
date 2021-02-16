@@ -7,12 +7,12 @@ Registered Users:
 1. User authorization.
 2. User roles: administrator and regular user.
 User rights:
-  	- see all comrades by category,
+  	- see all goods by category,,
 - buy goods
-- watch the basket
+- view basket
 - remove unnecessary goods from the cart,
 - make a purchase
- - мiew detailed information of your basket
+ - view detailed information of your basket
 - view detailed product information
 
 Admin rights:
